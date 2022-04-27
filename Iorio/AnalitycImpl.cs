@@ -1,14 +1,32 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace unieuroopCSharp1
 {
     class AnalitycImpl : Analityc
     {
+        private readonly ShopImpl _shop;
+
+        public AnalitycImpl(ShopImpl shop)
+        {
+            this._shop = shop;
+        }
+        private List<Product> getTotal(Product.Category category)
+        {
+            return this._shop.getSales().AsParallel()
+                .SelectMany((sale) => sale.getProducts()
+                    .AsParallel().Where((product) => product.Key.getCategory().Equals(category))
+                    .Distinct()
+                    .ToList();
+        }
         public Dictionary<Product.Category, int> getCategoriesSold()
         {
-            throw new NotImplementedException();
+            return this._shop.getSales().AsParallel()
+                    .SelectMany((sale) => sale.getProducts().AsParallel().Select((sale2) => sale2.Key))
+                    .Distinct()
+                    .ToDictionary((product) => product.getCategory(), (product) => this.getTotal(product.getCategory()).Count);
         }
 
         public Dictionary<Product, int> getOrderedByCategory(Predicate<Product.Category> categories)
