@@ -1,9 +1,7 @@
 .vs
 .idea
-*.suo
-*.user
-_ReSharper.*
-bin/
-obj/
+bin
+unieuroopSharp/obj
+unieuroopSharp/Debug
 packages
 .DS_Store
