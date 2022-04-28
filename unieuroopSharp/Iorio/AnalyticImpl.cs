@@ -1,9 +1,10 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
+using System.Linq;
+using unieuroopSharp.Iorio;
 
-namespace unieuroopCSharp1
+namespace unieuroopSharp.Iorio
 {
     class AnalitycImpl : Analityc
     {

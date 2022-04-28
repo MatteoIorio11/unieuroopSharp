@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using unieuroopSharp.Iorio;
 
-namespace unieuroopCSharp1
+namespace unieuroopSharp.Iorio
 {
     class ShopImpl
     {

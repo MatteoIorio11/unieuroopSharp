@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\matte\\Desktop\\unieuroopSharp\\unieuroopSharp\\unieuroopSharp.csproj",
+      "projectUniqueName": "C:\\Users\\matte\\Desktop\\workspaceSharp\\unieuroopSharp\\unieuroopSharp\\unieuroopSharp.csproj",
       "projectName": "unieuroopSharp",
-      "projectPath": "C:\\Users\\matte\\Desktop\\unieuroopSharp\\unieuroopSharp\\unieuroopSharp.csproj",
+      "projectPath": "C:\\Users\\matte\\Desktop\\workspaceSharp\\unieuroopSharp\\unieuroopSharp\\unieuroopSharp.csproj",
       "packagesPath": "C:\\Users\\matte\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\matte\\Desktop\\unieuroopSharp\\unieuroopSharp\\obj\\",
+      "outputPath": "C:\\Users\\matte\\Desktop\\workspaceSharp\\unieuroopSharp\\unieuroopSharp\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\matte\\AppData\\Roaming\\NuGet\\NuGet.Config",

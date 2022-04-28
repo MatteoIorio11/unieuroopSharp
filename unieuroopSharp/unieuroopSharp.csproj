@@ -6,10 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Iorio\" />
     <Folder Include="Ferri\" />
     <Folder Include="Vincenzi\" />
-    <Folder Include="Strada\" />
+	<Folder Include="Iorio\" />
+	<Folder Include="Strada\" />
   </ItemGroup>
 
 </Project>
