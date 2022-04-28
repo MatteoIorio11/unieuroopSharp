@@ -10,5 +10,16 @@ namespace unieuroopSharp.Iorio
         {
 
         }
+        private readonly Category _category;
+        private readonly String _name;
+
+        public Category GetCategory()
+        {
+            return this._category;
+        }
+        public String GetName()
+        {
+            return this._name;
+        }
     }
 }

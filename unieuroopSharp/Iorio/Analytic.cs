@@ -11,71 +11,71 @@ namespace unieuroopSharp.Iorio
         /// 
         /// </summary>
         /// <returns></returns>
-        HashSet<Product> getTotalProductsSold();
+        HashSet<Product> GetTotalProductsSold();
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        int getQuantitySoldOf(Product product);
+        int GetQuantitySoldOf(Product product);
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        int getQuantitySoldOf(Product product, Predicate<DateTime> date);
+        int GetQuantitySoldOf(Product product, Predicate<DateTime> date);
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        Dictionary<Product, int> getOrderedByCategory(Predicate<Product.Category> categories);
+        Dictionary<Product, int> GetOrderedByCategory(Predicate<Product.Category> categories);
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        HashSet<Product> getProductByDate(Predicate<DateTime> date);
+        HashSet<Product> GetProductByDate(Predicate<DateTime> date);
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        Dictionary<DateTime, int> getSoldOnDay(Predicate<DateTime> datePredicate);
+        Dictionary<DateTime, int> GetSoldOnDay(Predicate<DateTime> datePredicate);
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        Dictionary<Product.Category, int> getCategoriesSold();
+        Dictionary<Product.Category, int> GetCategoriesSold();
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        Dictionary<int, Double> getTotalSpentByYear();
+        Dictionary<int, Double> GetTotalSpentByYear();
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        Dictionary<int, Double> getTotalEarnedByYear();
+        Dictionary<int, Double> GetTotalEarnedByYear();
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        Dictionary<DateTime, Double> getTotalEarnedByMonth(Predicate<int> year);
+        Dictionary<int, Double> GetTotalEarnedByMonth(Predicate<int> year);
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        Dictionary<DateTime, Double> getTotalSpentByMonth(Predicate<int> year);
+        Dictionary<int, Double> GetTotalSpentByMonth(Predicate<int> year);
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        double getTotalStockPrice();
+        double GetTotalStockPrice();
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        double getTotalShopEarned();
+        double GetTotalShopEarned();
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        double getTotalAmountSpent();
+        double GetTotalAmountSpent();
     }
 }
