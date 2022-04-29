@@ -11,6 +11,6 @@ namespace unieuroopSharp.Iorio
         double GetTotalSpent();
         int GetQuantityOf(Product product);
         int GetTotalQuantity();
-        int GetClient();
+        ClientImpl GetClient();
     }
 }

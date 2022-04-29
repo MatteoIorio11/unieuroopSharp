@@ -7,9 +7,8 @@
 
   <ItemGroup>
     <Folder Include="Ferri\" />
-    <Folder Include="Vincenzi\" />
 	<Folder Include="Iorio\" />
+	<Folder Include="Vincenzi\" />
 	<Folder Include="Strada\" />
   </ItemGroup>
-
 </Project>

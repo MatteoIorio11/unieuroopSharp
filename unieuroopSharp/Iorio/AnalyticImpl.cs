@@ -14,6 +14,7 @@ namespace unieuroopSharp.Iorio
         {
             this._shop = shop;
         }
+
         private List<Product> GetTotal(Product.Category category)
         {
             return this._shop.GetSales().AsParallel()

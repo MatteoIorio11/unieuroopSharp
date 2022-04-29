@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31829.152
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "unieuroopSharp", "unieuroopSharp\unieuroopSharp.csproj", "{4E988579-2242-448B-A1B8-6A6648646B1C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "unieuroopSharp", "unieuroopSharp\unieuroopSharp.csproj", "{4E988579-2242-448B-A1B8-6A6648646B1C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IorioTest", "IorioTest\IorioTest.csproj", "{97D610F9-60E6-42D2-8CD7-30D8F5915272}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{4E988579-2242-448B-A1B8-6A6648646B1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E988579-2242-448B-A1B8-6A6648646B1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E988579-2242-448B-A1B8-6A6648646B1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97D610F9-60E6-42D2-8CD7-30D8F5915272}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97D610F9-60E6-42D2-8CD7-30D8F5915272}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97D610F9-60E6-42D2-8CD7-30D8F5915272}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97D610F9-60E6-42D2-8CD7-30D8F5915272}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
