@@ -2,6 +2,9 @@
 .idea
 bin
 unieuroopSharp/obj
+*/obj
+*/bin
+*/packages
 unieuroopSharp/Debug
 packages
 .DS_Store
