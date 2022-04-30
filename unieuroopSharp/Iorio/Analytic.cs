@@ -88,10 +88,20 @@ namespace unieuroopSharp.Iorio
 
         public double GetTotalAmountSpent()
         {
-            return -1;
+            return this._shop.GetBills().AsParallel()
+                .Select((entry) => entry.Value)
+                .Sum();
         }
 
         private double SpentInMonth(int month, Predicate<int> year)
+        {
+            return this._shop.GetBills().AsParallel()
+                .Where((sale) => sale.GetDate().Month == month && year.Invoke(sale.GetDate().Year))
+                .Select((sale) => sale.GetTotalSpent())
+                .Sum();
+        }
+
+        private double EarnedInMonth(int month, Predicate<int> year)
         {
             return this._shop.GetSales().AsParallel()
                 .Where((sale) => sale.GetDate().Month == month && year.Invoke(sale.GetDate().Year))
@@ -105,7 +115,7 @@ namespace unieuroopSharp.Iorio
                 .Where((sale) => year.Invoke(sale.GetDate().Year))
                 .Select((sale) => sale.GetDate().Month)
                 .Distinct()
-                .ToDictionary((month) => month, (month) => this.SpentInMonth(month, year));
+                .ToDictionary((month) => month, (month) => this.EarnedInMonth(month, year));
         }
 
         private double EarnedInYear(int year)
@@ -142,17 +152,34 @@ namespace unieuroopSharp.Iorio
 
         public Dictionary<int, double> GetTotalSpentByMonth(Predicate<int> year)
         {
-            throw new NotImplementedException();
+            return this._shop.GetBills().AsParallel()
+                           .When((entry) => year.Invoke(entry.Key.Year))
+                           .Select((entry) => entry.Key.Month)
+                           .Distinct()
+                           .ToDictionary((month) => month, (month) => this.SpentInMonth(month, year));
+        }
+
+        private double SpentInYear(int year)
+        {
+            return this._shop.GetBills().AsParallel()
+                   .Where((entry)=>entry.Key.Year == year)
+                   .Select((entry)=>entry.Value)
+                   .Sum();
         }
 
         public Dictionary<int, double> GetTotalSpentByYear()
         {
-            throw new NotImplementedException();
+            return this._shop.GtBills().AsParallel()
+                            .Select((entry)=>entry.Key.Year)
+                            .Distinct()
+                            .ToDictionary((year) => year, (year) => this.SpentInYear(year)); 
         }
 
         public double GetTotalStockPrice()
         {
-            throw new NotImplementedException();
+            return this._shop.GetStock().GetTotalStock().AsParallel()
+                     .Select((entry)=>entry.Key.GetSellingPrice() * entry.Value)
+                     .Sum();
         }
     }
 }

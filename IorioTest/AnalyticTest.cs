@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using unieuroopSharp.Iorio;
+using unieuroopSharp.Ferri;
 using System;
 using System.Collections.Generic;
 namespace IorioTest
@@ -37,17 +38,18 @@ namespace IorioTest
         /**
          * ALL THE SALES THAT WILL BE USED IN THIS TEST.
          */
-        private readonly Sale sale1 = new Sale(TIME_NOW, new Dictionary<Product, int>(p1, 10, p2, 100, p5, 1), null);
-        private readonly Sale sale2 = new Sale(TIME_NOW, new Dictionary<Product, int>(p1, 10, p2, 100, p5, 1, p7, 10), null);
-        private readonly Sale sale3 = new Sale(TIME_NOW, new Dictionary<Product, int>(p5, 10, p2, 100, p6, 1), null);
-        private readonly Sale sale4 = new Sale(TIME_NOW, new Dictionary<Product, int>(p3, 10, p7, 100, p1, 1), null);
-        private readonly Sale sale5 = new Sale(TIME_NOW, new Dictionary<Product, int>(p1, 10, p4, 100, p3, 1), null);
+        private readonly Sale sale1 = new Sale(TIME_NOW, new Dictionary<Product, int>() { p1, 10, p2, 100, p5, 1 }, Optional<Client>.Empty());
+        private readonly Sale sale2 = new Sale(TIME_NOW, new Dictionary<Product, int>() { p1, 10, p2, 100, p5, 1, p7, 10 }, Optional<Client>.Empty());
+        private readonly Sale sale3 = new Sale(TIME_NOW, new Dictionary<Product, int>() { p5, 10, p2, 100, p6, 1 }, Optional<Client>.Empty());
+        private readonly Sale sale4 = new Sale(TIME_NOW, new Dictionary<Product, int>() { p3, 10, p7, 100, p1, 1 }, Optional<Client>.Empty());
+        private readonly Sale sale5 = new Sale(TIME_NOW, new Dictionary<Product, int>() { p1, 10, p4, 100, p3, 1 }, Optional<Client>.Empty());
         [SetUp]
         public void Setup()
         {
             
             this._shop.addSale(sale1);
             this._shop.addSale(sale2);
+            this._shop.addSale(sale3);
             this._shop.addSale(sale3);
             this._shop.addSale(sale4);
             this._shop.addSale(sale5);
@@ -82,7 +84,7 @@ namespace IorioTest
             Assert.AreEqual(0, this._analytic.GetQuantitySoldOf(p8)); /*p8 does not exist in all the sales*/
 
             /*Add the new sale inside the analytic with the product p8*/
-            Sale sale6 = new Sale(DateTime.Now, new Dictionary<Product, int>(p8, 100), null);
+            Sale sale6 = new Sale(DateTime.Now, new Dictionary<Product, int>(p8, 100), Optional<Client>.Empty());
             this._shop.addSale(sale6);
             Assert.AreEqual(100, this._analytic.GetQuantitySoldOf(p8));
             Assert.AreEqual(P2_TOTAL_SOLD, this._analytic.GetQuantitySoldOf(p2));
@@ -113,8 +115,8 @@ namespace IorioTest
         [Test]
         public void testOrderedByCategory1()
         {
-            HashSet<Category> categories = new HashSet<Product.Category>(Product.Category.HOME, Product.Category.PC,
-                    Product.Category.SMARTPHONE, Product.Category.SMARTWATCH);
+            HashSet<Category> categories = new HashSet<Product.Category> () {Product.Category.HOME, Product.Category.PC,
+                    Product.Category.SMARTPHONE, Product.Category.SMARTWATCH };
 
             Assert.AreNotEqual(new Dictionary<Product.Category, int>(),
                     this._analytic.GetOrderedByCategory((category)=>categories.Contains(category)));
@@ -144,7 +146,7 @@ namespace IorioTest
         [Test]
         public void testOrderedByCategory2()
             {
-                HashSet<Product.Category> categories = new HashSet<>Product.Category.SMARTPHONE, Product.Category.SMARTWATCH);
+                HashSet<Product.Category> categories = new HashSet<Product.Category>() { Product.Category.SMARTPHONE, Product.Category.SMARTWATCH };
                 Dictionary<Product, int> products = this._analytic.GetOrderedByCategory((category)=>category == Product.Category.SMARTPHONE);
 
                 Assert.AreEqual(1, products.Count);
@@ -154,7 +156,7 @@ namespace IorioTest
                 int totalP1products = products[p1];
                 int totalP2products = products[p2];
 
-                Assert.AreEqual(new HashSet<Product>(p1, p2), products.Keys);
+                Assert.AreEqual(new HashSet<Product>() { p1, p2 }, products.Keys);
                 Assert.True(this._analytic.GetOrderedByCategory((category)=>category == Category.SMARTPHONE)[p1] > 0);
                 Assert.AreEqual(P1_TOTAL_SOLD, totalP1products);
                 Assert.AreEqual(P2_TOTAL_SOLD, totalP2products);
@@ -162,7 +164,7 @@ namespace IorioTest
                 categories.Add(Product.Category.PC);
                 products = this._analytic.GetOrderedByCategory((category)=>categories.Contains(category));
                 int totalP3products = products.TryGetValue(p3);
-                Assert.AreEqual(new HashSet<Product>(p1, p2, p3, p4), products.Keys);
+                Assert.AreEqual(new HashSet<Product>() { p1, p2, p3, p4 }, products.Keys);
                 Assert.AreEqual(P3_TOTAL_SOLD, totalP3products);
 
                 categories.Add(Product.Category.TABLET);
@@ -171,11 +173,11 @@ namespace IorioTest
 
                 categories.Remove(Product.Category.SMARTPHONE);
                 products = this._analytic.GetOrderedByCategory((category)=>categories.Contains(category));
-                Assert.AreEqual(new HashSet<Product>(p2, p3, p4), products.Keys);
+                Assert.AreEqual(new HashSet<Product>() { p2, p3, p4 }, products.Keys);
 
                 categories.Remove(Product.Category.SMARTWATCH);
                 products = this._analytic.GetOrderedByCategory((category)=>categories.Contains(category));
-                Assert.AreEqual(new HashSet<Product>(p3, p4), products.Keys);
+                Assert.AreEqual(new HashSet<Product>() { p3, p4 }, products.Keys);
 
                 categories.Remove(Product.Category.PC);
                 products = this._analytic.GetOrderedByCategory((category)=>categories.Contains(category));
@@ -192,31 +194,31 @@ namespace IorioTest
         [Test]
         public void testProductByDate()
             {
-                HashSet<DateTime> dates = new HashSet<DateTime>(TIME_NOW);
+                HashSet<DateTime> dates = new HashSet<DateTime>() { TIME_NOW };
                 HashSet<Product> products = this._analytic.GetProductByDate((date)=>dates.Contains(date));
                 DateTime dateTemp = new DateTime(YEAR_TEST, MONTH_TEST, DAY_TEST);
                 DateTime dateTemp2 = new DateTime(YEAR_TEST2, MONTH_TEST, DAY_TEST);
-                Sale saleTest = new Sale(dateTemp, new Dictionary<Product, int>(){ [p8] =  1 }, null);
-                Sale saleTest2 = new Sale(dateTemp2, new Dictionary<Product, int>(){ [p1] = 100 }, null);
-                Sale saleTest3 = new Sale(dateTemp2, new Dictionary<Product, int>() { [p2] = 100 }, null);
+                Sale saleTest = new Sale(dateTemp, new Dictionary<Product, int>(){ [p8] =  1 }, Optional<Client>.Empty());
+                Sale saleTest2 = new Sale(dateTemp2, new Dictionary<Product, int>(){ [p1] = 100 }, Optional<Client>.Empty());
+                Sale saleTest3 = new Sale(dateTemp2, new Dictionary<Product, int>() { [p2] = 100 }, Optional<Client>.Empty());
 
                 Assert.AreNotEqual(new HashSet<Product>(), products);
-                Assert.AreEqual(new HashSet<Product>(p1, p2, p3, p4, p5, p6, p7), products);
+                Assert.AreEqual(new HashSet<Product>() { p1, p2, p3, p4, p5, p6, p7 }, products);
 
                 products = this._analytic.GetProductByDate((date)=>date == dateTemp);
                 Assert.AreEqual(new HashSet<Product>(), products);
 
                 this._shop.AddSale(saleTest);
                 products = this._analytic.GetProductByDate((date)=>date == dateTemp);
-                Assert.AreEqual(new HashSet<Product>(p8), products);
+                Assert.AreEqual(new HashSet<Product>() { p8 }, products);
 
                 products = this._analytic.GetProductByDate((date)=>date.Year > DateTime.MinValue.Year);
-                Assert.AreEqual(new HashSet<Product>(p1, p2, p3, p4, p5, p6, p7, p8), products);
+                Assert.AreEqual(new HashSet<Product>() { p1, p2, p3, p4, p5, p6, p7, p8 }, products);
 
                 this._shop.AddSale(saleTest2);
                 this._shop.AddSale(saleTest3);
                 products = this._analytic.GetProductByDate((date)=>date.Year >= YEAR_TEST && date.Year <= YEAR_TEST2);
-                Assert.AreEqual(new HashSet<Product>(p1, p2, p8), products);
+                Assert.AreEqual(new HashSet<Product>() { p1, p2, p8 }, products);
             }
         /**
          * TEST FOR : analytic.GetSoldOnDay(Predicate<DateTime> d);{@link Analytic}
@@ -229,7 +231,7 @@ namespace IorioTest
             HashSet<DateTime> dates = new HashSet<DateTime> { TIME_NOW };
             Dictionary<DateTime, int> products = this._analytic.GetSoldOnDay((date)=>dates.Contains(date));
             DateTime dateTemp = new DateTime(YEAR_TEST, MONTH_TEST, DAY_TEST);
-            Sale saleTest = new Sale(dateTemp, new Dictionary<Product, int> { p8, 1 }, null);
+            Sale saleTest = new Sale(dateTemp, new Dictionary<Product, int>(){ p8, 1 }, Optional<Client>.Empty());
             int totalProducts = products[DateTime.Now];
 
             Assert.AreNotEqual(new Dictionary<Product, int>(), products);

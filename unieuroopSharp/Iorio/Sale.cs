@@ -2,22 +2,24 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using unieuroopSharp.Ferri;
+using unieuroopSharp.Vincenzi;
 
 namespace unieuroopSharp.Iorio
 {
     public class Sale : ISale
     {
         private readonly Dictionary<Product, int> _products;
-        private readonly Client? _client;
+        private readonly Optional<Client> _client;
         private readonly DateTime _date;
-        public Sale(DateTime date, Dictionary<Product, int> products, ClientImpl client)
+        public Sale(DateTime date, Dictionary<Product, int> products, Optional<Client> client)
         {
             this._date = date;
             this._products = new Dictionary<Product, int>(products);
             this._client = client;
         }
 
-        public Client GetClient()
+        public Optional<Client> GetClient()
         {
             return this._client;
         }
@@ -53,7 +55,7 @@ namespace unieuroopSharp.Iorio
 
         public override string ToString()
         {
-            String clientString = this._client ?? " Not a Registered Client" : this._client.ToString();
+            String clientString = this._client.IsEmpty ? " Not a Registered Client" : this._client.Get.ToString(); ;
             String date = " date : " + this._date;
             String totalEarned = this.GetTotalSpent() + " euros ";
             return date + " " + totalEarned + " Client : " + clientString;
