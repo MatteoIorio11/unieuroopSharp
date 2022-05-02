@@ -98,7 +98,9 @@ namespace unieuroopSharp.Vincenzi
 
         public void PutProductsBackInStock(Department department, Dictionary<Product, int> requestedProducts)
         {
-            throw new NotImplementedException();
+            var dep = this.Departments.Where(d => d.Equals(department)).First();
+            dep.TakeProductFromDepartment(requestedProducts);
+            this.Stock.AddProducts(requestedProducts);
         }
 
         public void RegisterClient(Client client)
@@ -108,7 +110,10 @@ namespace unieuroopSharp.Vincenzi
 
         public void RemoveClient(Client client)
         {
-            throw new NotImplementedException();
+            if (!this.RegisteredClients.Remove(client))
+            {
+                throw new NoSuchElementException("The input client does not exist");
+            }
         }
 
         public void RemoveDepartment(Department department)
@@ -121,17 +126,24 @@ namespace unieuroopSharp.Vincenzi
 
         public void RemoveSale(Sale sale)
         {
-            throw new NotImplementedException();
+            if (!this.Sales.Remove(sale))
+            {
+                throw new NoSuchElementException("The input sale does not exist");
+            }
         }
 
         public void RemoveStaff(Staff staff)
         {
-            throw new NotImplementedException();
+            if (!this.Staffs.Remove(staff))
+            {
+                throw new NoSuchElementException("The input staff does not exist");
+            }
         }
 
         public void RemoveStaffFrom(Department departmentInput, HashSet<Staff> staff)
         {
-            throw new NotImplementedException();
+            Department department = this.Departments.Where(d => d.Equals(departmentInput)).First();
+            department.RemoveStaff(staff);
         }
 
         public void RemoveSupplier(Supplier supplier)
