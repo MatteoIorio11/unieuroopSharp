@@ -28,7 +28,7 @@ namespace unieuroopSharp.Vincenzi
                 Stock stock, Dictionary<DateTime, Double> bills)
         {
 
-       
+
             this.Name = name;
             this.Departments = departments;
             this.Staffs = staffs;
@@ -94,7 +94,7 @@ namespace unieuroopSharp.Vincenzi
             staffInput.SetPassword(password.GetHashCode());
             staffInput.SetWorkTime(days);
         }
-    }
+
 
         public HashSet<Category> GetAllCategories()
         {
@@ -120,6 +120,7 @@ namespace unieuroopSharp.Vincenzi
 
         public void RemoveClient(Client client)
         {
+
             if (!this.RegisteredClients.Remove(client))
             {
                 throw new ArgumentException("The input client does not exist");
