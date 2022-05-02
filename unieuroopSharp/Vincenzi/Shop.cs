@@ -75,7 +75,10 @@ namespace unieuroopSharp.Vincenzi
 
         public void EditClient(string name, string surname, DateTime birthday, Client client)
         {
-            throw new NotImplementedException();
+            Client clientInput = RegisteredClients.Where(c => c.Equals(client)).First();
+            clientInput.GetPerson().SetPersonName(name);
+            clientInput.GetPerson().SetPersonSurname(surname);
+            clientInput.GetPerson().SetPersonBirthday(birthday);
         }
 
         public void EditStaff(string name, string surname, DateTime birthday, string email, string password, string hoursStartWork, string minutesStartWork, string hoursEndWork, string minutesEndWork, Staff staff)
