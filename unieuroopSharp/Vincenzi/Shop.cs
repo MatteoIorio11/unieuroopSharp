@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using unieuroopSharp.Ferri;
 using unieuroopSharp.Iorio;
 
 namespace unieuroopSharp.Vincenzi
@@ -13,19 +15,20 @@ namespace unieuroopSharp.Vincenzi
         public HashSet<Sale> Sales { get; private set; }
         public HashSet<Client> RegisteredClients { get; private set; }
         public Stock Stock { get; private set; }
-        public Dictionary<LocalDate, Double> Bills { get; private set; }
+        public Dictionary<DateTime, Double> Bills { get; private set; }
         public string Name { get; set; }
-        public Shop(string name, HashSet<Department> departments,
-                HashSet<Staff> staffs, HashSet<Supplier> suppliers,
-                HashSet<Sale> sales, HashSet<Client> registeredClients,
-                Stock stock, Dictionary<LocalDate, Double> bills)
-        {
-
         public Shop(string name)
         {
             this(name, new HashSet<>(), new HashSet<>(), new HashSet<>(), new HashSet<>(), new HashSet<>(), new StockImpl(), new HashMap<>());
         }
 
+        public Shop(string name, HashSet<Department> departments,
+                HashSet<Staff> staffs, HashSet<Supplier> suppliers,
+                HashSet<Sale> sales, HashSet<Client> registeredClients,
+                Stock stock, Dictionary<DateTime, Double> bills)
+        {
+
+       
             this.Name = name;
             this.Departments = departments;
             this.Staffs = staffs;
@@ -37,7 +40,7 @@ namespace unieuroopSharp.Vincenzi
         }
         public void AddBills(DateTime date, double spent)
         {
-            this.Bills.Add(spent, date);
+            this.Bills.Add(date, spent);
         }
 
         public void AddDepartment(Department department)
@@ -57,7 +60,12 @@ namespace unieuroopSharp.Vincenzi
 
         public void AddStaffIn(Department departmentInput, HashSet<Staff> staff)
         {
-            throw new NotImplementedException();
+            Department department = this.Departments.Where(d => d.Equals(d)).First;
+            foreach (var s in staff)
+            {
+                department.addStaff(s);
+            }
+
         }
 
         public void AddSupplier(Supplier supplier)
