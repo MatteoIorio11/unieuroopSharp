@@ -122,7 +122,7 @@ namespace unieuroopSharp.Vincenzi
         {
             if (!this.RegisteredClients.Remove(client))
             {
-                throw new NoSuchElementException("The input client does not exist");
+                throw new ArgumentException("The input client does not exist");
             }
         }
 
@@ -130,7 +130,7 @@ namespace unieuroopSharp.Vincenzi
         {
             if (!this.Departments.Remove(department))
             {
-                throw new NoSuchElementException("The input department does not exist");
+                throw new ArgumentException("The input department does not exist");
             }
         }
 
@@ -138,7 +138,7 @@ namespace unieuroopSharp.Vincenzi
         {
             if (!this.Sales.Remove(sale))
             {
-                throw new NoSuchElementException("The input sale does not exist");
+                throw new ArgumentException("The input sale does not exist");
             }
         }
 
@@ -146,7 +146,7 @@ namespace unieuroopSharp.Vincenzi
         {
             if (!this.Staffs.Remove(staff))
             {
-                throw new NoSuchElementException("The input staff does not exist");
+                throw new ArgumentException("The input staff does not exist");
             }
         }
 
@@ -160,7 +160,7 @@ namespace unieuroopSharp.Vincenzi
         {
             if (!this.Suppliers.Remove(supplier))
             {
-                throw new NoSuchElementException("The input supplier does not exist");
+                throw new ArgumentException("The input supplier does not exist");
             }
         }
 
