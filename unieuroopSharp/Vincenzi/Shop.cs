@@ -83,8 +83,18 @@ namespace unieuroopSharp.Vincenzi
 
         public void EditStaff(string name, string surname, DateTime birthday, string email, string password, string hoursStartWork, string minutesStartWork, string hoursEndWork, string minutesEndWork, Staff staff)
         {
-            throw new NotImplementedException();
+            var days = new Dictionary<DayOfWeek, KeyValuePair<DateTime, DateTime>>();
+            var times = new KeyValuePair<>(DateTime.(hoursStartWork, Integer.parseInt(minutesStartWork)), LocalTime.of(Integer.parseInt(hoursEndWork), Integer.parseInt(minutesEndWork)));
+            IntStream.range(DayOfWeek.MONDAY.getValue(), DayOfWeek.SUNDAY.getValue()).forEach(i->days.put(DayOfWeek.of(i), times));
+            Staff staffInput = this.staffs.stream().filter((staffStream)->staffStream.equals(staff)).findAny().get();
+            staffInput.GetPerson().SetPersonName(name);
+            staffInput.GetPerson().SetPersonSurname(surname);
+            staffInput.GetPerson().SetPersonBirthday(birthday);
+            staffInput.SetEmail(email);
+            staffInput.SetPassword(password.GetHashCode());
+            staffInput.SetWorkTime(days);
         }
+    }
 
         public HashSet<Category> GetAllCategories()
         {
@@ -148,12 +158,17 @@ namespace unieuroopSharp.Vincenzi
 
         public void RemoveSupplier(Supplier supplier)
         {
-            throw new NotImplementedException();
+            if (!this.Suppliers.Remove(supplier))
+            {
+                throw new NoSuchElementException("The input supplier does not exist");
+            }
         }
 
         public void SupplyDepartment(Department department, Dictionary<Product, int> requestedProduct)
         {
-            throw new NotImplementedException();
+            var dep = this.Departments.Where(d => d.Equals(department)).First();
+            var products = this.Stock.TakeFromStock(requestedProduct);
+            dep.get().addProducts(products);
         }
     }
 }
