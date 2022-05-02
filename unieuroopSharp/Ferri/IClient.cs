@@ -12,25 +12,25 @@ namespace unieuroopSharp.Ferri
 		BasePerson GetPerson();
 
         /// <summary>
-        /// This method is used to override toStrig.
+        /// This method is used to override ToStrig.
         /// </summary>
         /// <param></param>
         /// <returns> the string of the client </returns>
-        string toString();
+        string ToString();
 
         /// <summary>
-        /// This method is used to override hashCode.
+        /// This method is used to override GetHashCode.
         /// </summary>
         /// <param></param>
         /// <returns> hashCode for client </returns>
-        int hashCode();
+        int GetHashCode();
 
         /// <summary>
-        /// This method is used to override equals.
+        /// This method is used to override Equals.
         /// </summary>
-        /// <param></param>
+        /// <param name="obj"></param>
         /// <returns> equals for the client </returns>
-        bool equals(Object obj);
+        bool Equals(Object obj);
     }
 }
 

@@ -23,55 +23,55 @@ namespace unieuroopSharp.Ferri
         /// </summary>
         /// <param name="birthday"></param>
         /// <returns></returns>
-        void setPersonBirthday(DateTime birthday);
+        void SetPersonBirthday(DateTime birthday);
 
         /// <summary>
         /// This method is used to get the name of the person.
         /// </summary>
         /// <param></param>
         /// <returns> the name of the person </returns>
-        string getName();
+        string GetName();
 
         /// <summary>
         /// This method is used to get the surname of the person.
         /// </summary>
         /// <param></param>
         /// <returns> the surname of the person </returns>
-        string getSurname();
+        string GetSurname();
 
         /// <summary>
         /// This method is used to get the birthday of the person.
         /// </summary>
         /// <param></param>
         /// <returns> the surname of the person</returns>
-        DateTime getBirthdayDate();
+        DateTime GetBirthdayDate();
 
         /// <summary>
         /// This method is used to get the code of the person.
         /// </summary>
         /// <param></param>
         /// <returns> the code of the person </returns>
-        string getCode();
+        string GetCode();
 
         /// <summary>
-        /// This method is used to override toStrig.
+        /// This method is used to override ToStrig.
         /// </summary>
         /// <param></param>
         /// <returns> the string of the person </returns>
-        string toString();
+        string ToString();
 
         /// <summary>
-        /// This method is used to override hashCode.
+        /// This method is used to override GetHashCode.
         /// </summary>
         /// <param></param>
         /// <returns> hashCode for person </returns>
-        int hashCode();
+        int GetHashCode();
 
         /// <summary>
-        /// This method is used to override equals.
+        /// This method is used to override Equals.
         /// </summary>
-        /// <param></param>
+        /// <param name="obj"></param>
         /// <returns> equals for the person </returns>
-        bool equals(Object obj);
+        bool Equals(Object obj);
     }
 }

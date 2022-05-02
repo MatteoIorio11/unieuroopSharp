@@ -1,7 +1,7 @@
 ﻿using System;
 namespace unieuroopSharp.Ferri
 {
-	public class Client
+	public class Client : IClient
 	{
 		private readonly BasePerson _person;
 
