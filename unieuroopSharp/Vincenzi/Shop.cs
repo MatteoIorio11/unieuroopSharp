@@ -85,7 +85,7 @@ namespace unieuroopSharp.Vincenzi
         {
             var days = new Dictionary<DayOfWeek, KeyValuePair<DateTime, DateTime>>();
             var times = new KeyValuePair<>(DateTime.(hoursStartWork, Integer.parseInt(minutesStartWork)), LocalTime.of(Integer.parseInt(hoursEndWork), Integer.parseInt(minutesEndWork)));
-            IntStream.range(DayOfWeek.MONDAY.getValue(), DayOfWeek.SUNDAY.getValue()).forEach(i->days.put(DayOfWeek.of(i), times));
+            IntStream.range(DayOfWeek.Monday, DayOfWeek.Sunday).forEach(i->days.put(DayOfWeek.of(i), times));
             Staff staffInput = this.staffs.stream().filter((staffStream)->staffStream.equals(staff)).findAny().get();
             staffInput.GetPerson().SetPersonName(name);
             staffInput.GetPerson().SetPersonSurname(surname);
