@@ -3,57 +3,59 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using unieuroopSharp.Iorio;
+using unieuroopSharp.Vincenzi;
 
 namespace unieuroopSharp.Iorio
 {
     public class Analityc : IAnalityc
     {
-        private readonly ShopImpl _shop;
+        private readonly Shop _shop;
 
-        public Analityc(ShopImpl shop)
+        public Analityc(Shop shop)
         {
             this._shop = shop;
         }
 
         private List<Product> GetTotal(Product.Category category)
         {
-            return this._shop.GetSales().AsParallel()
+            return this._shop.Sales.AsParallel()
                 .SelectMany((sale) => sale.GetProducts()
-                    .AsParallel().Where((product) => product.GetCategory().Equals(category)))
+                    .AsParallel().Where((product) => product.ProductCategory.Equals(category)))
                     .Distinct()
                     .ToList();
         }
         public Dictionary<Product.Category, int> GetCategoriesSold()
         {
-            return this._shop.GetSales().AsParallel()
+            return this._shop.Sales.AsParallel()
                     .SelectMany((sale) => sale.GetProducts().AsParallel())
                     .Distinct()
-                    .ToDictionary((product) => product.GetCategory(),
-                        (product) => this.GetTotal(product.GetCategory()).Count);
+                    .ToDictionary((product) => product.ProductCategory,
+                        (product) => this.GetTotal(product.ProductCategory).Count);
         }
 
         public Dictionary<Product, int> GetOrderedByCategory(Predicate<Product.Category> categories)
         {
-            return this._shop.GetSales().AsParallel()
+            return this._shop.Sales.AsParallel()
                 .SelectMany((sale) => sale.GetProducts().AsParallel()
-                    .Where((product) => categories.Invoke(product.GetCategory())))
+                    .Where((product) => categories.Invoke(product.ProductCategory)))
                 .Distinct()
-                .OrderBy((product) => product.GetName())
+                .OrderBy((product) => product.Name)
                 .ToDictionary((product) => product, (product) => this.GetQuantitySoldOf(product));
         }
 
         public HashSet<Product> GetProductByDate(Predicate<DateTime> date)
         {
-            return this._shop.GetSales(date)
+            return this._shop.Sales.AsParallel()
+                .Where((sale) => date.Invoke(sale.GetDate()))
                     .SelectMany((sale) => sale.GetProducts().AsParallel())
                     .Distinct()
-                    .OrderBy((product) => product.GetName())
+                    .OrderBy((product) => product.Name)
                     .ToHashSet();
         }
 
         public int GetQuantitySoldOf(Product product)
         {
-            return this._shop.GetSales().AsParallel()
+            return this._shop.Sales.AsParallel()
                 .SelectMany((sale) => sale.GetProducts().AsParallel()
                     .Where((productParallel) => product.Equals(productParallel))
                     .Select((product) => sale.GetQuantityOf(product)))
@@ -62,7 +64,7 @@ namespace unieuroopSharp.Iorio
 
         public int GetQuantitySoldOf(Product product, Predicate<DateTime> date)
         {
-            return this._shop.GetSales().AsParallel()
+            return this._shop.Sales.AsParallel()
                 .Where((sale) => date.Invoke(sale.GetDate()))
                 .SelectMany((sale) => sale.GetProducts().AsParallel()
                     .Where((productParallel) => product.Equals(productParallel))
@@ -72,14 +74,16 @@ namespace unieuroopSharp.Iorio
 
         private int TotalQuantitySold(DateTime date)
         {
-            return this._shop.GetSales((dateStream) => dateStream.Equals(date)).AsParallel()
+            return this._shop.Sales.AsParallel()
+                .Where((sale) => date.Equals(sale.GetDate()))
                 .Select((sale) => sale.GetTotalQuantity())
                 .Sum();
         }
 
         public Dictionary<DateTime, int> GetSoldOnDay(Predicate<DateTime> datePredicate)
         {
-            return this._shop.GetSales(datePredicate).AsParallel()
+            return this._shop.Sales.AsParallel()
+                .Where((sale) => datePredicate.Invoke(sale.GetDate()))
                 .Select((sale) => sale.GetDate())
                 .Distinct()
                 .OrderBy((date) => date)
@@ -88,22 +92,22 @@ namespace unieuroopSharp.Iorio
 
         public double GetTotalAmountSpent()
         {
-            return this._shop.GetBills().AsParallel()
+            return this._shop.Bills.AsParallel()
                 .Select((entry) => entry.Value)
                 .Sum();
         }
 
         private double SpentInMonth(int month, Predicate<int> year)
         {
-            return this._shop.GetBills().AsParallel()
-                .Where((sale) => sale.GetDate().Month == month && year.Invoke(sale.GetDate().Year))
-                .Select((sale) => sale.GetTotalSpent())
+            return this._shop.Bills.AsParallel()
+                .Where((bill) => bill.Key.Month == month && year.Invoke(bill.Key.Year))
+                .Select((bill) => bill.Value)
                 .Sum();
         }
 
         private double EarnedInMonth(int month, Predicate<int> year)
         {
-            return this._shop.GetSales().AsParallel()
+            return this._shop.Sales.AsParallel()
                 .Where((sale) => sale.GetDate().Month == month && year.Invoke(sale.GetDate().Year))
                 .Select((sale) => sale.GetTotalSpent())
                 .Sum();
@@ -111,7 +115,7 @@ namespace unieuroopSharp.Iorio
 
         public Dictionary<int, double> GetTotalEarnedByMonth(Predicate<int> year)
         {
-            return this._shop.GetSales().AsParallel()
+            return this._shop.Sales.AsParallel()
                 .Where((sale) => year.Invoke(sale.GetDate().Year))
                 .Select((sale) => sale.GetDate().Month)
                 .Distinct()
@@ -120,7 +124,7 @@ namespace unieuroopSharp.Iorio
 
         private double EarnedInYear(int year)
         {
-            return this._shop.GetSales().AsParallel()
+            return this._shop.Sales.AsParallel()
                 .Where((sale) => sale.GetDate().Year == year)
                 .Select((sale) => sale.GetTotalSpent())
                 .Sum();
@@ -128,7 +132,7 @@ namespace unieuroopSharp.Iorio
 
         public Dictionary<int, double> GetTotalEarnedByYear()
         {
-            return this._shop.GetSales().AsParallel()
+            return this._shop.Sales.AsParallel()
                 .Select((sale) => sale.GetDate().Year)
                 .Distinct()
                 .ToDictionary((year) => year, (year) => this.EarnedInYear(year));
@@ -136,24 +140,24 @@ namespace unieuroopSharp.Iorio
 
         public HashSet<Product> GetTotalProductsSold()
         {
-            return this._shop.GetSales().AsParallel()
+            return this._shop.Sales.AsParallel()
                 .SelectMany((sale) => sale.GetProducts().AsParallel())
                 .Distinct()
-                .OrderBy((product) => product.GetName())
+                .OrderBy((product) => product.Name)
                 .ToHashSet();
         }
 
         public double GetTotalShopEarned()
         {
-            return this._shop.GetSales().AsParallel()
+            return this._shop.Sales.AsParallel()
                 .Select((sale) => sale.GetTotalSpent())
                 .Sum();
         }
 
         public Dictionary<int, double> GetTotalSpentByMonth(Predicate<int> year)
         {
-            return this._shop.GetBills().AsParallel()
-                           .When((entry) => year.Invoke(entry.Key.Year))
+            return this._shop.Bills.AsParallel()
+                           .Where((entry) => year.Invoke(entry.Key.Year))
                            .Select((entry) => entry.Key.Month)
                            .Distinct()
                            .ToDictionary((month) => month, (month) => this.SpentInMonth(month, year));
@@ -161,7 +165,7 @@ namespace unieuroopSharp.Iorio
 
         private double SpentInYear(int year)
         {
-            return this._shop.GetBills().AsParallel()
+            return this._shop.Bills.AsParallel()
                    .Where((entry)=>entry.Key.Year == year)
                    .Select((entry)=>entry.Value)
                    .Sum();
@@ -169,7 +173,7 @@ namespace unieuroopSharp.Iorio
 
         public Dictionary<int, double> GetTotalSpentByYear()
         {
-            return this._shop.GtBills().AsParallel()
+            return this._shop.Bills.AsParallel()
                             .Select((entry)=>entry.Key.Year)
                             .Distinct()
                             .ToDictionary((year) => year, (year) => this.SpentInYear(year)); 
@@ -177,7 +181,7 @@ namespace unieuroopSharp.Iorio
 
         public double GetTotalStockPrice()
         {
-            return this._shop.GetStock().GetTotalStock().AsParallel()
+            return this._shop.Stock.GetTotalStock().AsParallel()
                      .Select((entry)=>entry.Key.GetSellingPrice() * entry.Value)
                      .Sum();
         }

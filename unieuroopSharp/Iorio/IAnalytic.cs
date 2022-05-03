@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using unieuroopSharp.Iorio;
+using unieuroopSharp.Vincenzi;
 
 namespace unieuroopSharp.Iorio
 {
-    interface IAnalityc
+    public interface IAnalityc
     {
         /// <summary>
         /// This method has to return the Set of all product sold in the shop.
