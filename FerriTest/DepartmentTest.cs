@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System.Linq;
 using System;
 using System.Collections.Generic;
 using unieuroopSharp.Ferri;
@@ -39,7 +40,7 @@ namespace FerriTest
 			try
 			{
 				this._department.AddStaff(this.staff1);
-				
+
 			}
 			catch (InvalidOperationException e)
 			{

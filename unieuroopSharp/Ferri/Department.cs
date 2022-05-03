@@ -61,7 +61,10 @@ namespace unieuroopSharp.Ferri
             Dictionary<Product, int> prodcutsFilter = new Dictionary<>();
             for(Product product in this._products.Keys())
             {
-
+                if (quantity.Invoke(this._products.TryGetValue(product)))
+                {
+                    prodcutsFilter.Add(product, this._products.TryGetValue(product));
+                }
             }
         }
 
