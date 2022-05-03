@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using unieuroopSharp.Ferri;
+using unieuroopSharp.Vincenzi;
+
 namespace unieuroopSharp.Iorio
 {
-    interface ISale
+    public interface ISale
     {
         /// <summary>
         /// 

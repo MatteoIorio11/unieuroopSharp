@@ -19,39 +19,17 @@ namespace unieuroopSharp.Iorio
             this._client = client;
         }
 
-        public Optional<Client> GetClient()
-        {
-            return this._client;
-        }
+        public Optional<Client> GetClient() => this._client;
 
-        public DateTime GetDate()
-        {
-            return this._date;
-        }
+        public DateTime GetDate() => this._date;
 
-        public HashSet<Product> GetProducts()
-        {
-            return new HashSet<Product>(this._products.Keys);
-        }
+        public HashSet<Product> GetProducts() => this._products.AsParallel().Select((entry) => entry.Key).ToHashSet();
 
-        public int GetQuantityOf(Product product)
-        {
-            return this._products.ContainsKey(product) ? this._products[product] : 0;
-        }
+        public int GetQuantityOf(Product product) => this._products.ContainsKey(product) ? this._products[product] : 0;
 
-        public int GetTotalQuantity()
-        {
-            return this._products.Values.AsParallel()
-                .Sum();
-        }
+        public int GetTotalQuantity() => this._products.Values.AsParallel().Sum();
 
-        public double GetTotalSpent()
-        {
-            return this._products.AsParallel()
-                .Select((entry) => entry.Key.GetSellingPrice() * entry.Value)
-                .Sum();
-
-        }
+        public double GetTotalSpent() => this._products.AsParallel().Select((entry) => entry.Key.SellingPrice * entry.Value).Sum();
 
         public override string ToString()
         {
