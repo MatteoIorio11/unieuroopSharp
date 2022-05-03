@@ -8,26 +8,26 @@ using unieuroopSharp.Strada;
 
 namespace unieuroopSharp.Vincenzi
 {
-    class Shop : IShop
+    public class Shop : IShop
     {
-        public HashSet<IDepartment> Departments { get; private set; }
-        public HashSet<IStaff> Staffs { get; private set; }
+        public HashSet<Department> Departments { get; private set; }
+        public HashSet<Staff> Staffs { get; private set; }
         public HashSet<ISupplier> Suppliers { get; private set; }
-        public HashSet<ISale> Sales { get; private set; }
-        public HashSet<IClient> RegisteredClients { get; private set; }
-        public IStock Stock { get; private set; }
+        public HashSet<Sale> Sales { get; private set; }
+        public HashSet<Client> RegisteredClients { get; private set; }
+        public Stock Stock { get; private set; }
         public Dictionary<DateTime, Double> Bills { get; private set; }
         public string Name { get; set; }
-        public Shop(string name): this(name, new HashSet<IDepartment>(), 
-            new HashSet<IStaff>(), new HashSet<ISupplier>(), 
-            new HashSet<ISale>(), new HashSet<IClient>(), new Stock(), 
+        public Shop(string name): this(name, new HashSet<Department>(), 
+            new HashSet<Staff>(), new HashSet<ISupplier>(), 
+            new HashSet<Sale>(), new HashSet<Client>(), new Stock(), 
             new Dictionary<DateTime, Double>())
         {}
 
-        public Shop(string name, HashSet<IDepartment> departments,
-                HashSet<IStaff> staffs, HashSet<ISupplier> suppliers,
-                HashSet<ISale> sales, HashSet<IClient> registeredClients,
-                IStock stock, Dictionary<DateTime, Double> bills)
+        public Shop(string name, HashSet<Department> departments,
+                HashSet<Staff> staffs, HashSet<ISupplier> suppliers,
+                HashSet<Sale> sales, HashSet<Client> registeredClients,
+                Stock stock, Dictionary<DateTime, Double> bills)
         {
 
 
@@ -62,7 +62,7 @@ namespace unieuroopSharp.Vincenzi
 
         public void AddStaffIn(Department departmentInput, HashSet<Staff> staff)
         {
-            IDepartment department = this.Departments.Where(d => d.Equals(d)).First();
+            Department department = this.Departments.Where(d => d.Equals(d)).First();
             foreach (var s in staff)
             {
                 department.AddStaff(s);
@@ -77,7 +77,7 @@ namespace unieuroopSharp.Vincenzi
 
         public void EditClient(string name, string surname, DateTime birthday, Client client)
         {
-            IClient clientInput = RegisteredClients.Where(c => c.Equals(client)).First();
+            Client clientInput = RegisteredClients.Where(c => c.Equals(client)).First();
             clientInput.GetPerson().SetPersonName(name);
             clientInput.GetPerson().SetPersonSurname(surname);
             clientInput.GetPerson().SetPersonBirthday(birthday);
@@ -155,7 +155,7 @@ namespace unieuroopSharp.Vincenzi
 
         public void RemoveStaffFrom(Department departmentInput, HashSet<Staff> staff)
         {
-            IDepartment department = this.Departments.Where(d => d.Equals(departmentInput)).First();
+            Department department = this.Departments.Where(d => d.Equals(departmentInput)).First();
             department.RemoveStaff(staff);
         }
 
