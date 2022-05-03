@@ -4,28 +4,30 @@ using System.Linq;
 using System.Text;
 using unieuroopSharp.Ferri;
 using unieuroopSharp.Iorio;
+using unieuroopSharp.Strada;
 
 namespace unieuroopSharp.Vincenzi
 {
     class Shop : IShop
     {
-        public HashSet<Department> Departments { get; private set; }
-        public HashSet<Staff> Staffs { get; private set; }
-        public HashSet<Supplier> Suppliers { get; private set; }
-        public HashSet<Sale> Sales { get; private set; }
-        public HashSet<Client> RegisteredClients { get; private set; }
-        public Stock Stock { get; private set; }
+        public HashSet<IDepartment> Departments { get; private set; }
+        public HashSet<IStaff> Staffs { get; private set; }
+        public HashSet<ISupplier> Suppliers { get; private set; }
+        public HashSet<ISale> Sales { get; private set; }
+        public HashSet<IClient> RegisteredClients { get; private set; }
+        public IStock Stock { get; private set; }
         public Dictionary<DateTime, Double> Bills { get; private set; }
         public string Name { get; set; }
-        public Shop(string name)
-        {
-            this(name, new HashSet<>(), new HashSet<>(), new HashSet<>(), new HashSet<>(), new HashSet<>(), new StockImpl(), new HashMap<>());
-        }
+        public Shop(string name): this(name, new HashSet<IDepartment>(), 
+            new HashSet<IStaff>(), new HashSet<ISupplier>(), 
+            new HashSet<ISale>(), new HashSet<IClient>(), new Stock(), 
+            new Dictionary<DateTime, Double>())
+        {}
 
-        public Shop(string name, HashSet<Department> departments,
-                HashSet<Staff> staffs, HashSet<Supplier> suppliers,
-                HashSet<Sale> sales, HashSet<Client> registeredClients,
-                Stock stock, Dictionary<DateTime, Double> bills)
+        public Shop(string name, HashSet<IDepartment> departments,
+                HashSet<IStaff> staffs, HashSet<ISupplier> suppliers,
+                HashSet<ISale> sales, HashSet<IClient> registeredClients,
+                IStock stock, Dictionary<DateTime, Double> bills)
         {
 
 
