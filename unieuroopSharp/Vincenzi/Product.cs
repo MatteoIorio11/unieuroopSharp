@@ -4,7 +4,7 @@ using System.Text;
 
 namespace unieuroopSharp.Vincenzi
 {
-    class Product
+    public class Product
     {
         public int ProductCode { get; private set; }
         public double PurchasePrice { get; private set; }
