@@ -36,11 +36,11 @@ namespace unieuroopSharp.Strada
         void DeleteProducts(HashSet<Product> productsDelete);
 
         /// <summary>
-        /// Return the products filter by a .
+        /// Return the products filter by a Predicate with a KeyValuePair of Quantity and category.
         /// </summary>
-        /// <param name=""> </param>
+        /// <param name="filter"> </param>
         /// <returns> List of FilteredProducts </returns>
-        List<Product> GetFilterProducts();
+        List<Product> GetFilterProducts(Predicate<KeyValuePair<int, Product.Category>> filter);
 
         /// <summary>
         ///  Return the list of products sorted by increasing or decreasing.
