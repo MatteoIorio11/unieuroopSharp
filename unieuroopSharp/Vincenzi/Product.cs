@@ -10,7 +10,7 @@ namespace unieuroopSharp.Vincenzi
         public double PurchasePrice { get; private set; }
         public string Name { get; set; }
         public string Brand { get; set; }
-        private double SellingPrice { get; set; }
+        public double SellingPrice { get; set; }
         public string Description { get; set; }
         public Category ProductCategory { get; set; }
         public Product(
