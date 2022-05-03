@@ -1,19 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using unieuroopSharp.Ferri;
 using unieuroopSharp.Iorio;
+using unieuroopSharp.Strada;
+using static unieuroopSharp.Vincenzi.Product;
 
 namespace unieuroopSharp.Vincenzi
 {
-    interface IShop
+    public interface IShop
     {
         void AddBills(DateTime date, double spent);
         void AddDepartment(Department department);
         void AddStaffIn(Department departmentInput, HashSet<Staff> staff);
         void RemoveStaffFrom(Department departmentInput, HashSet<Staff> staff);
-        void EditStaff(String name, String surname, DateTime birthday, String email, String password,
-        string hoursStartWork, String minutesStartWork, String hoursEndWork, String minutesEndWork, Staff staff);
-        void EditClient(String name, String surname, DateTime birthday, Client client);
+        void EditStaff(string name, string surname, DateTime birthday, string email, string password,
+        string hoursStartWork, string minutesStartWork, string hoursEndWork, string minutesEndWork, Staff staff);
+        void EditClient(string name, string surname, DateTime birthday, Client client);
         void AddStaff(Staff staff);
         void AddSupplier(Supplier supplier);
         void AddSale(Sale sale);
@@ -25,7 +28,7 @@ namespace unieuroopSharp.Vincenzi
         void RemoveClient(Client client);
         void SupplyDepartment(Department department, Dictionary<Product, int> requestedProduct);
         void PutProductsBackInStock(Department department, Dictionary<Product, int> requestedProducts);
-        Department MergeDepartments(HashSet<Department> departments, String newName);
+        Department MergeDepartments(HashSet<Department> departments, string newName);
         HashSet<Category> GetAllCategories();
     }
 }
