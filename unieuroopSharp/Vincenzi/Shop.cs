@@ -12,20 +12,20 @@ namespace unieuroopSharp.Vincenzi
     {
         public HashSet<Department> Departments { get; private set; }
         public HashSet<Staff> Staffs { get; private set; }
-        public HashSet<ISupplier> Suppliers { get; private set; }
+        public HashSet<Supplier> Suppliers { get; private set; }
         public HashSet<Sale> Sales { get; private set; }
         public HashSet<Client> RegisteredClients { get; private set; }
         public Stock Stock { get; private set; }
         public Dictionary<DateTime, Double> Bills { get; private set; }
         public string Name { get; set; }
         public Shop(string name): this(name, new HashSet<Department>(), 
-            new HashSet<Staff>(), new HashSet<ISupplier>(), 
+            new HashSet<Staff>(), new HashSet<Supplier>(), 
             new HashSet<Sale>(), new HashSet<Client>(), new Stock(), 
             new Dictionary<DateTime, Double>())
         {}
 
         public Shop(string name, HashSet<Department> departments,
-                HashSet<Staff> staffs, HashSet<ISupplier> suppliers,
+                HashSet<Staff> staffs, HashSet<Supplier> suppliers,
                 HashSet<Sale> sales, HashSet<Client> registeredClients,
                 Stock stock, Dictionary<DateTime, Double> bills)
         {
@@ -70,7 +70,7 @@ namespace unieuroopSharp.Vincenzi
 
         }
 
-        public void AddSupplier(ISupplier supplier)
+        public void AddSupplier(Supplier supplier)
         {
             this.Suppliers.Add(supplier);
         }
@@ -86,9 +86,9 @@ namespace unieuroopSharp.Vincenzi
         public void EditStaff(string name, string surname, DateTime birthday, string email, string password, string hoursStartWork, string minutesStartWork, string hoursEndWork, string minutesEndWork, Staff staff)
         {
             var days = new Dictionary<DayOfWeek, KeyValuePair<DateTime, DateTime>>();
-            var times = new KeyValuePair<DateTime, DateTime> (DateTime.(hoursStartWork, Integer.parseInt(minutesStartWork)), LocalTime.of(Integer.parseInt(hoursEndWork), Integer.parseInt(minutesEndWork)));
-            IntStream.range(DayOfWeek.Monday, DayOfWeek.Sunday).forEach( if=>days.put(DayOfWeek.of(i), times));
-            Staff staffInput = this.staffs.stream().filter((staffStream)->staffStream.equals(staff)).findAny().get();
+            var times = new KeyValuePair<DateTime, DateTime> (new DateTime(0,0,0,int.Parse(hoursStartWork), int.Parse(minutesStartWork),0), new DateTime(0,0,0,int.Parse(hoursEndWork), int.Parse(minutesEndWork),0));
+            Enumerable.Range(((int)DayOfWeek.Monday), ((int)DayOfWeek.Sunday)).ToList().ForEach( i => days.Add(((DayOfWeek)i), times));
+            Staff staffInput = this.Staffs.Where(s => s.Equals(staff)).First();
             staffInput.GetPerson().SetPersonName(name);
             staffInput.GetPerson().SetPersonSurname(surname);
             staffInput.GetPerson().SetPersonBirthday(birthday);
@@ -159,7 +159,7 @@ namespace unieuroopSharp.Vincenzi
             department.RemoveStaff(staff);
         }
 
-        public void RemoveSupplier(ISupplier supplier)
+        public void RemoveSupplier(Supplier supplier)
         {
             if (!this.Suppliers.Remove(supplier))
             {
