@@ -10,20 +10,20 @@ namespace unieuroopSharp.Ferri
 	{
 		private readonly string _name;
 		private readonly HashSet<Staff> _staff;
-		private readonly Dictionary<Product, int> _products
+        private readonly Dictionary<Product, int> _products;
 
 		public Department(string nameDepartment, HashSet<Staff> staff, Dictionary<Product, int> products)
 		{
 			this._name = nameDepartment;
-			this._staff = new HashSet<>(staff);
-			this._products = new Dictionary<>(products);
+			this._staff = new HashSet<Staff>(staff);
+			this._products = new Dictionary<Product, int>(products);
 		}
 
 		public void AddProducts(Dictionary<Product, int> produtcs)
         {
-			for (Product product in produtcs.Keys())
+			foreach (Product product in produtcs.Keys)
             {
-				var productsAdded = this._products.
+                var productsAdded = this._products;
             }
         }
 
@@ -31,7 +31,7 @@ namespace unieuroopSharp.Ferri
         {
             if (!this._staff.Contains(newStaff))
             {
-				this._staff.Add(newStaff)
+                this._staff.Add(newStaff);
             }
             else
             {
@@ -58,14 +58,16 @@ namespace unieuroopSharp.Ferri
 
         public Dictionary<Product, int> ProductsByQuantity(Predicate<int> quantity)
         {
-            Dictionary<Product, int> prodcutsFilter = new Dictionary<>();
-            for(Product product in this._products.Keys())
+            Dictionary<Product, int> prodcutsFilter = new Dictionary<Product, int>();
+            foreach(Product product in this._products.Keys)
             {
-                if (quantity.Invoke(this._products.TryGetValue(product)))
+                if (quantity.Invoke(this._products[product]))
                 {
-                    prodcutsFilter.Add(product, this._products.TryGetValue(product));
+                    prodcutsFilter.Add(product, this._products[product]);
                 }
             }
+
+            return prodcutsFilter;
         }
 
         public HashSet<Staff> GetStaff()
@@ -84,17 +86,19 @@ namespace unieuroopSharp.Ferri
             {
                 throw new ArgumentException("Take products can not be done beacuse some products's quantity is less than the quantity in input");
             }
-            for(Product product in productsTaken.Keys())
+            foreach(Product product in productsTaken.Keys)
             {
-                this._products[product] -= productsTaken.TryGetValue();
+                this._products[product] -= productsTaken[product];
             }
+
+            return this._products;
         }
 
         private bool CheckProductsTaken(Dictionary<Product, int> productsTaken)
         {
-            for(Product productTake in productsTaken.Keys())
+            foreach(Product productTake in productsTaken.Keys)
             {
-                if(!this._products.ContainsKey(productTaken) || this._products.TryGetValue(productTaken) < productsTaken.TryGetValue(productTake))
+                if(!this._products.ContainsKey(productTake) || this._products[productTake] < productsTaken[productTake])
                 {
                     return false;
                 }
