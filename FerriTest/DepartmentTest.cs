@@ -39,7 +39,7 @@ namespace FerriTest
 			try
 			{
 				this._department.AddStaff(this.staff1);
-
+				
 			}
 			catch (InvalidOperationException e)
 			{
