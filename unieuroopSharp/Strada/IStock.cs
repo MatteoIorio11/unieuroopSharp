@@ -53,6 +53,6 @@ namespace unieuroopSharp.Strada
         ///  Return the max amount of a product present in the Stock.
         /// </summary>
         /// <returns> MaxAmount of a product's quantities in the Stock </returns>
-        int getMaxAmountOfProducts();
+        int GetMaxAmountOfProducts();
     }
 }
