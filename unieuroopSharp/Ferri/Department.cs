@@ -10,7 +10,7 @@ namespace unieuroopSharp.Ferri
 	{
 		private readonly string _name;
 		private readonly HashSet<Staff> _staff;
-		private readonly Dictionary<Product, int> _products;
+		private readonly Dictionary<Product, int> _products
 
 		public Department(string nameDepartment, HashSet<Staff> staff, Dictionary<Product, int> products)
 		{
@@ -61,7 +61,7 @@ namespace unieuroopSharp.Ferri
             Dictionary<Product, int> prodcutsFilter = new Dictionary<>();
             for(Product product in this._products.Keys())
             {
-                
+
             }
         }
 
@@ -83,7 +83,7 @@ namespace unieuroopSharp.Ferri
             }
             for(Product product in productsTaken.Keys())
             {
-                this._products.Add() ---------
+                this._products[product] -= productsTaken.TryGetValue();
             }
         }
 
