@@ -54,16 +54,20 @@ namespace VincenziTest
         public void Setup()
         {
             this._shop01 = new Shop("shop01");
-            this._department1 = new Department("department1", Set.of(staff1, staff2, staff3, staff4), Map.of(p1, 2, p2, 1, p3, 2, p4, 2));
+            this._department1 = new Department("department1", new HashSet<Staff>() { this._staff1, this._staff2, this._staff3, this._staff4 }, Dictionary<Product, int>(){
+                { this._p1, 2 },
+                { this._p2, 1 },
+                { this._p3, 2 },
+                { this._p4, 2 });
             this._department2 = new Department("department2", Set.of(staff1, staff2), Map.of(p1, 2, p4, 2));
             this._department3 = new Department("department3", Set.of(staff3, staff4), Map.of(p2, 1, p3, 2));
             this._shop01.AddDepartment(this._department1);
             this._shop01.AddDepartment(_department2);
-            this.shop01.addDepartment(department3);
+            this._shop01.AddDepartment(_department3);
 
-            this.departments.add(department1);
-            this.departments.add(department2);
-            this.departments.add(department3);
+            this._departments.Add(_department1);
+            this._departments.Add(_department2);
+            this._departments.Add(_department3);
         }
 
         [Test]

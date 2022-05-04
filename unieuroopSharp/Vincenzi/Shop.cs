@@ -100,12 +100,50 @@ namespace unieuroopSharp.Vincenzi
 
         public HashSet<Product.Category> GetAllCategories()
         {
-            throw new NotImplementedException();
+            return this.Stock.GetTotalStock()
+               .Select(entry => entry.Key.ProductCategory)
+               .Distinct()
+               .ToHashSet();
         }
 
         public Department MergeDepartments(HashSet<Department> departments, string newName)
         {
-            throw new NotImplementedException();
+            Dictionary<Product, int> products = new Dictionary<Product, int>();
+            //Get all products from the departments i want to merge.
+            departments.Select(d => d.GetAllProducts().AsParallel())
+                .AsParallel()
+                .ForAll(m =>
+                {
+                    m.ForAll(p =>
+                    {
+                        if (products.ContainsKey(p.Key))
+                        {
+                            products[p.Key] += p.Value;
+                        }
+                        else
+                        {
+                            products.Add(p.Key, p.Value);
+                        }
+                    });
+                });
+
+            HashSet<Staff> staff = new HashSet<Staff>();
+            //Get all staff from the department i want to merge.
+            departments.Select(d => d.GetStaff().AsParallel())
+                    .AsParallel()
+                    .ForAll(d =>
+                    {
+                        d.ForAll(s =>
+                            {
+                                staff.Add(s);
+                            });
+                    });
+            //Removing all departments.
+            departments.AsParallel().ForAll(d => this.RemoveDepartment(d));
+            //Creating new department.
+            var dep = new Department(newName, staff, products);
+            this.AddDepartment(dep);
+            return dep;
         }
 
         public void PutProductsBackInStock(Department department, Dictionary<Product, int> requestedProducts)
