@@ -61,7 +61,7 @@ namespace unieuroopSharp.Ferri
             }
         }
 
-        public string GetDepartment()
+        public string GetDepartmentName()
         {
             return this._name;
         }
@@ -124,7 +124,7 @@ namespace unieuroopSharp.Ferri
 
         public override int GetHashCode()
         {
-            return base.GetHashCode(this._name);
+            return base.GetHashCode() + this._name.GetHashCode();
         }
 
         public override bool Equals(object obj)

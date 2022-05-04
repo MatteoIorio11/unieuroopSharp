@@ -17,11 +17,11 @@ namespace unieuroopSharp.Strada
             {
                 if (this._productsStocked.ContainsKey(product))
                 {
-                    this._productsStocked[product] += products.TryGetValue(product);
+                    this._productsStocked[product] += products[product];
                 }
                 else
                 {
-                    this._productsStocked.Add(product, products.TryGetValue(product));
+                    this._productsStocked.Add(product, products[product]);
                 }
             }
         }
@@ -39,7 +39,7 @@ namespace unieuroopSharp.Strada
             }
             foreach (Product productTaken in productsTaken.Keys)
             {
-                this._productsStocked[productTaken] -= productsTaken.TryGetValue(productTaken);
+                this._productsStocked[productTaken] -= productsTaken[productTaken];
             }
             return productsTaken;
         }
@@ -59,9 +59,25 @@ namespace unieuroopSharp.Strada
             }
         }
 
-        public List<Product> GetFilterProducts(Predicate<KeyValuePair<int, Product.Category>> filter);
+        public List<Product> GetFilterProducts(Predicate<KeyValuePair<int, Product.Category>> filter)
+        {
+            List<Product> productFiltered = new List<Product>();
+            foreach (Product product in this._productsStocked)
+            {
+                if(filter(this._productsStocked[product], product.ProductCategory))
+                {
+                    productFiltered.Add(product);
+                }
+            }
+            return productFiltered;
+        }
 
-        public List<Product> GetProductsSorted(Comparer<Product> sorting);
+        public List<Product> GetProductsSorted(Comparer<Product> sorting)
+        {
+            List<Product> productSorted = new List<Product>();
+            productSorted.Sort(sorting);
+            return productSorted;
+        }
 
         public int GetMaxAmountOfProducts()
         {
@@ -77,7 +93,7 @@ namespace unieuroopSharp.Strada
         {
             foreach (Products productTaken in productsTaken.Keys)
             {
-                if(!this._productsStocked.ContainsKey(productTaken) || this._productsStocked.TryGetValue(productTaken) < productsTaken.TryGetValue(productTaken))
+                if(!this._productsStocked.ContainsKey(productTaken) || this._productsStocked[productsTaken] < productsTaken[productTaken])
                 {
                     return false;
                 }

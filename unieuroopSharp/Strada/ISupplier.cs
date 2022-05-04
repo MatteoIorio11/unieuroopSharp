@@ -6,7 +6,7 @@ using unieuroopSharp.Vincenzi;
 
 namespace unieuroopSharp.Strada
 {
-    interface ISupplier
+    public interface ISupplier
     {
         /// <summary>
         /// Return the name of the Supplier.

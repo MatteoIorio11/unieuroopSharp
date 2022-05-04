@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IorioTest", "IorioTest\Iori
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FerriTest", "FerriTest\FerriTest.csproj", "{FBDD21CB-003D-4C11-BDC1-4112E429B115}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VincenziTest", "VincenziTest\VincenziTest.csproj", "{89537CB3-AACF-4A9C-8BE4-4E75BA2990A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VincenziTest", "VincenziTest\VincenziTest.csproj", "{89537CB3-AACF-4A9C-8BE4-4E75BA2990A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StradaTest", "StradaTest\StradaTest.csproj", "{4CE07D1B-CA29-4338-8AFF-DDC731FEC312}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{89537CB3-AACF-4A9C-8BE4-4E75BA2990A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89537CB3-AACF-4A9C-8BE4-4E75BA2990A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89537CB3-AACF-4A9C-8BE4-4E75BA2990A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CE07D1B-CA29-4338-8AFF-DDC731FEC312}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CE07D1B-CA29-4338-8AFF-DDC731FEC312}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CE07D1B-CA29-4338-8AFF-DDC731FEC312}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CE07D1B-CA29-4338-8AFF-DDC731FEC312}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

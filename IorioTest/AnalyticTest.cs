@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using Microsoft.VisualStudio.TestPlatform;
 using unieuroopSharp.Iorio;
 using unieuroopSharp.Ferri;
 using unieuroopSharp.Vincenzi;
@@ -10,7 +11,7 @@ namespace IorioTest
     {
         private static readonly int P1_TOTAL_SOLD = 31; /*sum of all p1s product*/
         private static readonly int P2_TOTAL_SOLD = 300; /*sum of all p2s product*/
-        private static readonly int P3_TOTAL_SOLD = 11; /*sum of all p3s product*/;
+        private static readonly int P3_TOTAL_SOLD = 11; /*sum of all p3s product*/
         /*All the money earned from sales*/
         private static readonly double TOTAL_SHOP_EARNED = 961_600;
         private static readonly double TOTAL_SPENT_NOW = 16;
@@ -27,7 +28,7 @@ namespace IorioTest
         private static readonly int TOTAL_PRODUCT_SOLD = 7;  /*all the total product sold , not the quantity*/
         private static readonly DateTime TIME_NOW = DateTime.Now;
         private Analityc _analytic;
-        private Shop _shop;
+        private Shop _shop = new Shop("prova");
         private readonly Product p1 = new Product(1, "iphone 13 pro", APPLE_PRODUCT,  1200.00,  900.00, "best phone ever created", Product.Category.SMARTPHONE);
         private readonly Product p2 = new Product(2, "applewatch", APPLE_PRODUCT, 500.00,  200.00, "best watch ever created", Product.Category.SMARTWATCH);
         private readonly Product p3 = new Product(3, "mac book pro 14 ", APPLE_PRODUCT,  3000.00, 2000.00, "best mac book ever created", Product.Category.PC);
@@ -39,15 +40,36 @@ namespace IorioTest
         /**
          * ALL THE SALES THAT WILL BE USED IN THIS TEST.
          */
-        private readonly ISale sale1 = new Sale(TIME_NOW, new Dictionary<Product, int>() { p1, 10, p2, 100, p5, 1 }, Optional<Client>.Empty());
-        private readonly ISale sale2 = new Sale(TIME_NOW, new Dictionary<Product, int>() { p1, 10, p2, 100, p5, 1, p7, 10 }, Optional<Client>.Empty());
-        private readonly ISale sale3 = new Sale(TIME_NOW, new Dictionary<Product, int>() { p5, 10, p2, 100, p6, 1 }, Optional<Client>.Empty());
-        private readonly ISale sale4 = new Sale(TIME_NOW, new Dictionary<Product, int>() { p3, 10, p7, 100, p1, 1 }, Optional<Client>.Empty());
-        private readonly ISale sale5 = new Sale(TIME_NOW, new Dictionary<Product, int>() { p1, 10, p4, 100, p3, 1 }, Optional<Client>.Empty());
         [SetUp]
         public void Setup()
         {
-            
+            Dictionary<Product, int> products = new Dictionary<Product, int>();
+            products.Add(p1, 10);
+            products.Add(p2, 100);
+            products.Add(p5, 1);
+            Sale sale1 = new Sale(TIME_NOW, new Dictionary<Product, int>(products), Optional<Client>.Empty());
+            products.Clear();
+            products.Add(p1, 10);
+            products.Add(p2, 100);
+            products.Add(p5, 1);
+            products.Add(p7, 10);
+            Sale sale2 = new Sale(TIME_NOW, new Dictionary<Product, int>(products), Optional<Client>.Empty());
+            products.Clear();
+            products.Add(p5, 10);
+            products.Add(p2, 100);
+            products.Add(p6, 1);
+            Sale sale3 = new Sale(TIME_NOW, new Dictionary<Product, int>(products), Optional<Client>.Empty());
+            products.Clear();
+            products.Add(p3, 10);
+            products.Add(p7, 100);
+            products.Add(p1, 1);
+            Sale sale4 = new Sale(TIME_NOW, new Dictionary<Product, int>(products), Optional<Client>.Empty());
+            products.Clear();
+            products.Add(p1, 10);
+            products.Add(p4, 100);
+            products.Add(p3, 1);
+            Sale sale5 = new Sale(TIME_NOW, new Dictionary<Product, int>(products), Optional<Client>.Empty());
+
             this._shop.AddSale(sale1);
             this._shop.AddSale(sale2);
             this._shop.AddSale(sale3);

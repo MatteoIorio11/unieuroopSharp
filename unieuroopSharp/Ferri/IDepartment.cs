@@ -32,7 +32,7 @@ namespace unieuroopSharp.Ferri
 		/// </summary>
 		/// <param></param>
 		/// <returns> department name </returns>
-		string GetDepartment();
+		string GetDepartmentName();
 
 		/// <summary>
 		/// This method is used to return products filtered by their quantities.
