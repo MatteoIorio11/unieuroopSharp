@@ -61,7 +61,7 @@ namespace unieuroopSharp.Ferri
             }
         }
 
-        public string GetDepartment()
+        public string GetDepartmentName()
         {
             return this._name;
         }
