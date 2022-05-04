@@ -6,7 +6,7 @@ using unieuroopSharp.Vincenzi;
 
 namespace unieuroopSharp.Strada
 {
-    interface IStock
+    public interface IStock
     {
         /// <summary>
         ///  This method is used to get the quantity sold of a specific product.
