@@ -42,7 +42,14 @@ namespace unieuroopSharp.Vincenzi
         }
         public void AddBills(DateTime date, double spent)
         {
-            this.Bills.Add(date, spent);
+            if (this.Bills.ContainsKey(date))
+            {
+                this.Bills[date] = spent;
+            }
+            else
+            {
+                this.Bills.Add(date, spent);
+            }
         }
 
         public void AddDepartment(Department department)
