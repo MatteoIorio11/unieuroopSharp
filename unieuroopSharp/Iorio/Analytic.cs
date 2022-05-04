@@ -27,10 +27,12 @@ namespace unieuroopSharp.Iorio
         public Dictionary<Product.Category, int> GetCategoriesSold()
         {
             return this._shop.Sales.AsParallel()
-                    .SelectMany((sale) => sale.GetProducts().AsParallel())
+                    .SelectMany((sale) => sale.GetProducts().AsParallel()
+                        .Select((product)=>product.ProductCategory)
+                        .Distinct())
                     .Distinct()
-                    .ToDictionary((product) => product.ProductCategory,
-                        (product) => this.GetTotal(product.ProductCategory).Count);
+                    .ToDictionary((category) => category,
+                        (category) => this.GetTotal(category).Count);
         }
 
         public Dictionary<Product, int> GetOrderedByCategory(Predicate<Product.Category> categories)
@@ -182,7 +184,7 @@ namespace unieuroopSharp.Iorio
         public double GetTotalStockPrice()
         {
             return this._shop.Stock.GetTotalStock().AsParallel()
-                     .Select((entry)=>entry.Key.GetSellingPrice() * entry.Value)
+                     .Select((entry)=>entry.Key.SellingPrice* entry.Value)
                      .Sum();
         }
     }

@@ -38,6 +38,6 @@ namespace unieuroopSharp.Iorio
         /// 
         /// </summary>
         /// <returns></returns>
-        Optional<Client> GetClient();
+        Optional<IClient> GetClient();
     }
 }

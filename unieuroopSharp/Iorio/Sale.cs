@@ -10,16 +10,16 @@ namespace unieuroopSharp.Iorio
     public class Sale : ISale
     {
         private readonly Dictionary<Product, int> _products;
-        private readonly Optional<Client> _client;
+        private readonly Optional<IClient> _client;
         private readonly DateTime _date;
-        public Sale(DateTime date, Dictionary<Product, int> products, Optional<Client> client)
+        public Sale(DateTime date, Dictionary<Product, int> products, Optional<IClient> client)
         {
             this._date = date;
             this._products = new Dictionary<Product, int>(products);
             this._client = client;
         }
 
-        public Optional<Client> GetClient() => this._client;
+        public Optional<IClient> GetClient() => this._client;
 
         public DateTime GetDate() => this._date;
 
