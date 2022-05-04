@@ -61,7 +61,7 @@ namespace unieuroopSharp.Strada
 
         public List<Product> GetFilterProducts(Predicate<KeyValuePair<int, Product.Category>> filter)
         {
-            List<Product> productFiltered = new List<>();
+            List<Product> productFiltered = new List<Product>();
             foreach (Product product in this._productsStocked)
             {
                 if(filter(this._productsStocked[product], product.ProductCategory))
