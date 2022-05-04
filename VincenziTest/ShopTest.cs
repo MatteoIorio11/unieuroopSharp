@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using unieuroopSharp.Ferri;
+using unieuroopSharp.Iorio;
 using unieuroopSharp.Vincenzi;
 using static unieuroopSharp.Vincenzi.Product;
 
@@ -116,6 +117,26 @@ namespace VincenziTest
             catch (ArgumentException e)
             {
                 Assert.Equals("The input client does not exist", e.Message);
+            }
+        }
+
+        [Test]
+        public void testRemoveSale1()
+        {
+            ISale sale1 = new Sale(DATE_NOW, new Dictionary<Product, int>() { { this._p1, 10 }, { this._p2, 100 } }, Optional<Client>.Empty());
+            ISale sale2 = new Sale(DATE_NOW, new Dictionary<Product, int>() { { this._p1, 1 } }, Optional<Client>.Empty());
+            ISale sale3 = new Sale(DATE_NOW, new Dictionary<Product, int>() { { this._p1, 1 } }, Optional<Client>.Empty());
+
+            this._shop01.AddSale(sale1);
+            this._shop01.AddSale(sale2);
+
+            try
+            {
+                this._shop01.RemoveSale(sale3);
+            }
+            catch (ArgumentException e)
+            {
+                Assert.Equals("The input sale does not exist", e.Message);
             }
         }
     }
