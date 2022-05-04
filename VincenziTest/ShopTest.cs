@@ -100,5 +100,23 @@ namespace VincenziTest
             Assert.Equals(new Dictionary<Product, int>() { { this._p1, 4 }, { this._p2, 3 }, { this._p3, 2 }, { this._p4, 2 } }, this._department1.GetAllProducts());
             Assert.Equals(new Dictionary<Product, int>() { { this._p2, 1 }, { this._p3, 2 }, { this._p4, 1 } }, this._department3.GetAllProducts());
         }
+        [Test]
+        public void TestRemoveClient1()
+        {
+            IClient client1 = new Client("Name1", "Surname1", DATE_NOW, "a");
+            IClient client2 = new Client("Name2", "Surname2", DATE_NOW, "b");
+            IClient client3 = new Client("Name3", "Surname3", DATE_NOW, "c");
+            this._shop01.RegisterClient(client1);
+            this._shop01.RegisterClient(client2);
+
+            try
+            {
+                this._shop01.RemoveClient(client3);
+            }
+            catch (ArgumentException e)
+            {
+                Assert.Equals("The input client does not exist", e.Message);
+            }
+        }
     }
 }
