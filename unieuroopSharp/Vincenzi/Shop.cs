@@ -10,24 +10,24 @@ namespace unieuroopSharp.Vincenzi
 {
     public class Shop : IShop
     {
-        public HashSet<Department> Departments { get; private set; }
-        public HashSet<Staff> Staffs { get; private set; }
-        public HashSet<Supplier> Suppliers { get; private set; }
-        public HashSet<Sale> Sales { get; private set; }
-        public HashSet<Client> RegisteredClients { get; private set; }
-        public Stock Stock { get; private set; }
-        public Dictionary<DateTime, Double> Bills { get; private set; }
+        public HashSet<IDepartment> Departments { get; private set; }
+        public HashSet<IStaff> Staffs { get; private set; }
+        public HashSet<ISupplier> Suppliers { get; private set; }
+        public HashSet<ISale> Sales { get; private set; }
+        public HashSet<IClient> RegisteredClients { get; private set; }
+        public IStock Stock { get; private set; }
+        public Dictionary<DateTime, double> Bills { get; private set; }
         public string Name { get; set; }
-        public Shop(string name): this(name, new HashSet<Department>(), 
-            new HashSet<Staff>(), new HashSet<Supplier>(), 
-            new HashSet<Sale>(), new HashSet<Client>(), new Stock(), 
-            new Dictionary<DateTime, Double>())
+        public Shop(string name): this(name, new HashSet<IDepartment>(), 
+            new HashSet<IStaff>(), new HashSet<ISupplier>(), 
+            new HashSet<ISale>(), new HashSet<IClient>(), new Stock(), 
+            new Dictionary<DateTime, double>())
         {}
 
-        public Shop(string name, HashSet<Department> departments,
-                HashSet<Staff> staffs, HashSet<Supplier> suppliers,
-                HashSet<Sale> sales, HashSet<Client> registeredClients,
-                Stock stock, Dictionary<DateTime, Double> bills)
+        public Shop(string name, HashSet<IDepartment> departments,
+                HashSet<IStaff> staffs, HashSet<ISupplier> suppliers,
+                HashSet<ISale> sales, HashSet<IClient> registeredClients,
+                IStock stock, Dictionary<DateTime, double> bills)
         {
 
 
@@ -52,24 +52,24 @@ namespace unieuroopSharp.Vincenzi
             }
         }
 
-        public void AddDepartment(Department department)
+        public void AddDepartment(IDepartment department)
         {
             this.Departments.Add(department);
         }
 
-        public void AddSale(Sale sale)
+        public void AddSale(ISale sale)
         {
             this.Sales.Add(sale);
         }
 
-        public void AddStaff(Staff staff)
+        public void AddStaff(IStaff staff)
         {
             this.Staffs.Add(staff);
         }
 
-        public void AddStaffIn(Department departmentInput, HashSet<Staff> staff)
+        public void AddStaffIn(IDepartment departmentInput, HashSet<IStaff> staff)
         {
-            Department department = this.Departments.Where(d => d.Equals(d)).First();
+            IDepartment department = this.Departments.Where(d => d.Equals(d)).First();
             foreach (var s in staff)
             {
                 department.AddStaff(s);
@@ -77,25 +77,25 @@ namespace unieuroopSharp.Vincenzi
 
         }
 
-        public void AddSupplier(Supplier supplier)
+        public void AddSupplier(ISupplier supplier)
         {
             this.Suppliers.Add(supplier);
         }
 
-        public void EditClient(string name, string surname, DateTime birthday, Client client)
+        public void EditClient(string name, string surname, DateTime birthday, IClient client)
         {
-            Client clientInput = RegisteredClients.Where(c => c.Equals(client)).First();
+            IClient clientInput = RegisteredClients.Where(c => c.Equals(client)).First();
             clientInput.GetPerson().SetPersonName(name);
             clientInput.GetPerson().SetPersonSurname(surname);
             clientInput.GetPerson().SetPersonBirthday(birthday);
         }
 
-        public void EditStaff(string name, string surname, DateTime birthday, string email, string password, string hoursStartWork, string minutesStartWork, string hoursEndWork, string minutesEndWork, Staff staff)
+        public void EditStaff(string name, string surname, DateTime birthday, string email, string password, string hoursStartWork, string minutesStartWork, string hoursEndWork, string minutesEndWork, IStaff staff)
         {
             var days = new Dictionary<DayOfWeek, KeyValuePair<DateTime, DateTime>>();
             var times = new KeyValuePair<DateTime, DateTime> (new DateTime(0,0,0,int.Parse(hoursStartWork), int.Parse(minutesStartWork),0), new DateTime(0,0,0,int.Parse(hoursEndWork), int.Parse(minutesEndWork),0));
             Enumerable.Range(((int)DayOfWeek.Monday), ((int)DayOfWeek.Sunday)).ToList().ForEach( i => days.Add(((DayOfWeek)i), times));
-            Staff staffInput = this.Staffs.Where(s => s.Equals(staff)).First();
+            IStaff staffInput = this.Staffs.Where(s => s.Equals(staff)).First();
             staffInput.GetPerson().SetPersonName(name);
             staffInput.GetPerson().SetPersonSurname(surname);
             staffInput.GetPerson().SetPersonBirthday(birthday);
@@ -113,7 +113,7 @@ namespace unieuroopSharp.Vincenzi
                .ToHashSet();
         }
 
-        public Department MergeDepartments(HashSet<Department> departments, string newName)
+        public IDepartment MergeDepartments(HashSet<IDepartment> departments, string newName)
         {
             Dictionary<Product, int> products = new Dictionary<Product, int>();
             //Get all products from the departments i want to merge.
@@ -134,7 +134,7 @@ namespace unieuroopSharp.Vincenzi
                     });
                 });
 
-            HashSet<Staff> staff = new HashSet<Staff>();
+            HashSet<IStaff> staff = new HashSet<IStaff>();
             //Get all staff from the department i want to merge.
             departments.Select(d => d.GetStaff().AsParallel())
                     .AsParallel()
@@ -153,19 +153,19 @@ namespace unieuroopSharp.Vincenzi
             return dep;
         }
 
-        public void PutProductsBackInStock(Department department, Dictionary<Product, int> requestedProducts)
+        public void PutProductsBackInStock(IDepartment department, Dictionary<Product, int> requestedProducts)
         {
             var dep = this.Departments.Where(d => d.Equals(department)).First();
             dep.TakeProductFromDepartment(requestedProducts);
             this.Stock.AddProducts(requestedProducts);
         }
 
-        public void RegisterClient(Client client)
+        public void RegisterClient(IClient client)
         {
             this.RegisteredClients.Add(client);
         }
 
-        public void RemoveClient(Client client)
+        public void RemoveClient(IClient client)
         {
 
             if (!this.RegisteredClients.Remove(client))
@@ -174,7 +174,7 @@ namespace unieuroopSharp.Vincenzi
             }
         }
 
-        public void RemoveDepartment(Department department)
+        public void RemoveDepartment(IDepartment department)
         {
             if (!this.Departments.Remove(department))
             {
@@ -182,7 +182,7 @@ namespace unieuroopSharp.Vincenzi
             }
         }
 
-        public void RemoveSale(Sale sale)
+        public void RemoveSale(ISale sale)
         {
             if (!this.Sales.Remove(sale))
             {
@@ -190,7 +190,7 @@ namespace unieuroopSharp.Vincenzi
             }
         }
 
-        public void RemoveStaff(Staff staff)
+        public void RemoveStaff(IStaff staff)
         {
             if (!this.Staffs.Remove(staff))
             {
@@ -198,13 +198,13 @@ namespace unieuroopSharp.Vincenzi
             }
         }
 
-        public void RemoveStaffFrom(Department departmentInput, HashSet<Staff> staff)
+        public void RemoveStaffFrom(IDepartment departmentInput, HashSet<IStaff> staff)
         {
-            Department department = this.Departments.Where(d => d.Equals(departmentInput)).First();
+            IDepartment department = this.Departments.Where(d => d.Equals(departmentInput)).First();
             department.RemoveStaff(staff);
         }
 
-        public void RemoveSupplier(Supplier supplier)
+        public void RemoveSupplier(ISupplier supplier)
         {
             if (!this.Suppliers.Remove(supplier))
             {
@@ -212,7 +212,7 @@ namespace unieuroopSharp.Vincenzi
             }
         }
 
-        public void SupplyDepartment(Department department, Dictionary<Product, int> requestedProduct)
+        public void SupplyDepartment(IDepartment department, Dictionary<Product, int> requestedProduct)
         {
             var dep = this.Departments.Where(d => d.Equals(department)).First();
             var products = this.Stock.TakeFromStock(requestedProduct);
