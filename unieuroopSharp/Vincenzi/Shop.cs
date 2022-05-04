@@ -216,7 +216,7 @@ namespace unieuroopSharp.Vincenzi
         {
             var dep = this.Departments.Where(d => d.Equals(department)).First();
             var products = this.Stock.TakeFromStock(requestedProduct);
-            dep.get().addProducts(products);
+            dep.AddProducts(products);
         }
     }
 }

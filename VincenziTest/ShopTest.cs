@@ -54,16 +54,29 @@ namespace VincenziTest
         public void Setup()
         {
             this._shop01 = new Shop("shop01");
-            this._department1 = new Department("department1", new HashSet<Staff>() { this._staff1, this._staff2, this._staff3, this._staff4 }, Dictionary<Product, int>(){
+            this._department1 = new Department("department1", 
+                new HashSet<Staff>() { this._staff1, this._staff2, this._staff3, this._staff4 }, 
+                new Dictionary<Product, int>(){
                 { this._p1, 2 },
                 { this._p2, 1 },
                 { this._p3, 2 },
-                { this._p4, 2 });
-            this._department2 = new Department("department2", Set.of(staff1, staff2), Map.of(p1, 2, p4, 2));
-            this._department3 = new Department("department3", Set.of(staff3, staff4), Map.of(p2, 1, p3, 2));
+                { this._p4, 2 }
+            });
+            this._department2 = new Department("department2",
+                new HashSet<Staff>() { this._staff1, this._staff2 },
+                new Dictionary<Product, int>(){
+                { this._p1, 2 },
+                { this._p4, 2 }
+            });
+            this._department3 = new Department("department3",
+                new HashSet<Staff>() { this._staff3, this._staff4 },
+                new Dictionary<Product, int>(){
+                { this._p2, 1 },
+                { this._p3, 2 }
+            });
             this._shop01.AddDepartment(this._department1);
-            this._shop01.AddDepartment(_department2);
-            this._shop01.AddDepartment(_department3);
+            this._shop01.AddDepartment(this._department2);
+            this._shop01.AddDepartment(this._department3);
 
             this._departments.Add(_department1);
             this._departments.Add(_department2);
@@ -71,9 +84,21 @@ namespace VincenziTest
         }
 
         [Test]
-        public void Test1()
+        public void TestMergeDepartments()
         {
-            Assert.Pass();
+            var departmentTemp = this._shop01.MergeDepartments(_departments, "finalDep");
+            Assert.Equals("finalDep", departmentTemp.GetDepartmentName());
+            Assert.Equals(departmentTemp.GetAllProducts(), new Dictionary<Product, int>() { { this._p1, 4 }, { this._p2, 2 }, { this._p3, 4 }, { this._p4, 4 } });
+            Assert.Equals(new HashSet<Staff>() { this._staff1, this._staff2, this._staff3, this._staff4 }, departmentTemp.GetStaff());
+        }
+        [Test]
+        public void TestSupplyDepartment()
+        {
+            this._shop01.Stock.AddProducts(new Dictionary<Product, int>() { { this._p1, 10 }, { this._p2, 10 }, { this._p3, 10 }, { this._p4, 10 } });
+            this._shop01.SupplyDepartment(this._department1, new Dictionary<Product, int>() { { this._p1, 2 }, { this._p2, 2 } });
+            this._shop01.SupplyDepartment(this._department3, new Dictionary<Product, int>() { { this._p4, 1 } });
+            Assert.Equals(new Dictionary<Product, int>() { { this._p1, 4 }, { this._p2, 3 }, { this._p3, 2 }, { this._p4, 2 } }, this._department1.GetAllProducts());
+            Assert.Equals(new Dictionary<Product, int>() { { this._p2, 1 }, { this._p3, 2 }, { this._p4, 1 } }, this._department3.GetAllProducts());
         }
     }
 }
