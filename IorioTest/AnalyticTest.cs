@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using Microsoft.VisualStudio.TestPlatform;
 using unieuroopSharp.Iorio;
 using unieuroopSharp.Ferri;
 using unieuroopSharp.Vincenzi;
@@ -27,7 +28,7 @@ namespace IorioTest
         private static readonly int TOTAL_PRODUCT_SOLD = 7;  /*all the total product sold , not the quantity*/
         private static readonly DateTime TIME_NOW = DateTime.Now;
         private Analityc _analytic;
-        private Shop _shop;
+        private Shop _shop = new Shop("prova");
         private readonly Product p1 = new Product(1, "iphone 13 pro", APPLE_PRODUCT,  1200.00,  900.00, "best phone ever created", Product.Category.SMARTPHONE);
         private readonly Product p2 = new Product(2, "applewatch", APPLE_PRODUCT, 500.00,  200.00, "best watch ever created", Product.Category.SMARTWATCH);
         private readonly Product p3 = new Product(3, "mac book pro 14 ", APPLE_PRODUCT,  3000.00, 2000.00, "best mac book ever created", Product.Category.PC);
