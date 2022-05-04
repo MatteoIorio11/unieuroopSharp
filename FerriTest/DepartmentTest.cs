@@ -21,16 +21,25 @@ namespace FerriTest
 		private readonly Product p3 = new Product(3, "mac book pro 14 ", Tests.APPLE_PRODUCT, 3000.00, 2000.00, "best mac book ever created", Product.Category.PC);
 		private readonly Product p4 = new Product(4, "mac book pro 16", Tests.APPLE_PRODUCT, 6000.00, 3000.00, "best mac book ever created", Product.Category.PC);
 		private readonly Staff staff1 = new Staff("Nome1", "Cognome1", Tests.TIME_NOW,
-			"a", "email1@gmail.com", 12, new Dictionary<DayOfWeek, KeyValuePair<DateTime, DateTime>>(DayOfWeek.of(1), new KeyValuePair<DateTime, DateTime>(TIME_START, TIME_FINISH)));
+			"a", "email1@gmail.com", 12, new Dictionary<DayOfWeek, KeyValuePair<DateTime, DateTime>>()
+				{
+					{DayOfWeek.Monday,new KeyValuePair<DateTime, DateTime>(TIME_START, TIME_FINISH)}
+				});
 		private readonly Staff staff2 = new Staff("Nome2", "Cognome2", Tests.TIME_NOW,
-			"b", "email2@gmail.csom", 123, new Dictionary<DayOfWeek, KeyValuePair<DateTime, DateTime>>(DayOfWeek.of(2), new KeyValuePair<DateTime, DateTime>(TIME_START, TIME_FINISH)));
+			"b", "email2@gmail.csom", 123, new Dictionary<DayOfWeek, KeyValuePair<DateTime, DateTime>>()
+				{
+					{DayOfWeek.Wednesday,new KeyValuePair<DateTime, DateTime>(TIME_START, TIME_FINISH)}
+				});
 		private readonly Staff staff3 = new Staff("NomeProva", "CognomeProva", Tests.TIME_NOW,
-			"c", "email3@gmail.com", 12, new Dictionary<DayOfWeek, KeyValuePair<DateTime, DateTime>>(DayOfWeek.of(1), new KeyValuePair<DateTime, DateTime>(TIME_START, TIME_FINISH)));
+			"c", "email3@gmail.com", 12, new Dictionary<DayOfWeek, KeyValuePair<DateTime, DateTime>>()
+				{
+					{DayOfWeek.Monday,new KeyValuePair<DateTime, DateTime>(TIME_START, TIME_FINISH)}
+				});
 
 		[SetUp]
 		public void SetUp()
 		{
-			this._department = new Department("department1", new HashSet<Staff>(staff1, staff2), new Dictionary<Product, int>(p1, 10, p2, 100, p3, 3));
+			this._department = new Department("department1", new HashSet<Staff>() { staff1, staff2 }, new Dictionary<Product, int>() { p1, 10, p2, 100, p3, 3 });
 		}
 
 		[Test]
@@ -69,7 +78,7 @@ namespace FerriTest
 		{
 			try
 			{
-				this._department.RemoveStaff(new HashSet<Staff>(staff1));
+				this._department.RemoveStaff(new HashSet<Staff>() { staff1 });
 			}
 			catch (ArgumentException e)
 			{
@@ -82,8 +91,8 @@ namespace FerriTest
 		{
 			try
 			{
-				this._department.RemoveStaff(new HashSet<Staff>(staff3));
-				Assert.Fail("ERROR : the exception must be thowned because " + staff3.toString() + "does not exist in Department");
+				this._department.RemoveStaff(new HashSet<Staff>() { staff3 });
+				Assert.Fail("ERROR : the exception must be thowned because " + staff3.ToString() + "does not exist in Department");
 			}
 			catch (ArgumentException e)
 			{
@@ -94,7 +103,7 @@ namespace FerriTest
 		[Test]
 		public void TestProductByQuantity()
 		{
-			Dictionary<Product, int> products = this._department.ProductsByQuantity(quantity -> quantity <= 10);
+			Dictionary<Product, int> products = this._department.ProductsByQuantity(quantity => quantity <= 10);
 
 			Assert.True(products.ContainsKey(p1));
 
@@ -111,7 +120,7 @@ namespace FerriTest
 		{
 			try
 			{
-				this._department.TakeProductFromDepartment(new Dictionary<Product, int>(p1, v1: 1, p3, v2: 3));
+				this._department.TakeProductFromDepartment(new Dictionary<Product, int>() { p1, 1, p3, 3 });
 			}
 			catch
 			{
@@ -124,7 +133,7 @@ namespace FerriTest
 		{
 			try
 			{
-				this._department.TakeProductFromDepartment(new Dictionary<Product, int>(p3, 100));
+				this._department.TakeProductFromDepartment(new Dictionary<Product, int>() { p3, 100 });
 				Assert.Fail("ERROR : this operation can not be done, p30's quantity is less than 100");
 			}
 			catch (ArgumentException e)
@@ -136,7 +145,7 @@ namespace FerriTest
 		[Test]
 		public void testAddProducts()
 		{
-			Dictionary<Product, int> products = new Dictionary<Product, int>(p1, 1, p2, 100, p3, 10);
+			Dictionary<Product, int> products = new Dictionary<Product, int>() { p1, 1, p2, 100, p3, 10 };
 			this._department.AddProducts(products);
 			int quantityP1 = this._department.GetAllProducts()[p1];
 			int quantityP2 = this._department.GetAllProducts()[p2];

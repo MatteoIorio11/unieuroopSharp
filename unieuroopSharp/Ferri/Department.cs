@@ -15,15 +15,22 @@ namespace unieuroopSharp.Ferri
 		public Department(string nameDepartment, HashSet<Staff> staff, Dictionary<Product, int> products)
 		{
 			this._name = nameDepartment;
-			this._staff = new HashSet<Staff>(staff);
-			this._products = new Dictionary<Product, int>(products);
+            this._staff = staff;
+            this._products = products;
 		}
 
-		public void AddProducts(Dictionary<Product, int> produtcs)
+		public void AddProducts(Dictionary<Product, int> products)
         {
-			foreach (Product product in produtcs.Keys)
+			foreach (Product product in products.Keys)
             {
-                var productsAdded = this._products;
+                if (this._products.ContainsKey(product))
+                {
+                    this._products[product] += products[product];
+                }
+                else
+                {
+                    this._products.Add(product, products[product]);
+                }
             }
         }
 
@@ -41,13 +48,16 @@ namespace unieuroopSharp.Ferri
 
 		public void RemoveStaff(HashSet<Staff> deleteStaff)
         {
-            if (this._staff.Contains(deleteStaff))
+            foreach(Staff staff in deleteStaff)
             {
-				this._staff.Remove(deleteStaff);
-            }
-            else
-            {
-                throw new ArgumentException("Some of the input staff does not work in this department.");
+                if (this._staff.Contains(staff))
+                {
+                    this._staff.Remove(staff);
+                }
+                else
+                {
+                    throw new ArgumentException("Some of the input staff does not work in this department.");
+                }
             }
         }
 
