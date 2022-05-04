@@ -11,24 +11,24 @@ namespace unieuroopSharp.Vincenzi
     public interface IShop
     {
         void AddBills(DateTime date, double spent);
-        void AddDepartment(Department department);
-        void AddStaffIn(Department departmentInput, HashSet<Staff> staff);
-        void RemoveStaffFrom(Department departmentInput, HashSet<Staff> staff);
+        void AddDepartment(IDepartment department);
+        void AddStaffIn(IDepartment departmentInput, HashSet<IStaff> staff);
+        void RemoveStaffFrom(IDepartment departmentInput, HashSet<IStaff> staff);
         void EditStaff(string name, string surname, DateTime birthday, string email, string password,
-        string hoursStartWork, string minutesStartWork, string hoursEndWork, string minutesEndWork, Staff staff);
-        void EditClient(string name, string surname, DateTime birthday, Client client);
-        void AddStaff(Staff staff);
-        void AddSupplier(Supplier supplier);
-        void AddSale(Sale sale);
-        void RegisterClient(Client client);
-        void RemoveDepartment(Department department);
-        void RemoveStaff(Staff staff);
-        void RemoveSupplier(Supplier supplier);
-        void RemoveSale(Sale sale);
-        void RemoveClient(Client client);
-        void SupplyDepartment(Department department, Dictionary<Product, int> requestedProduct);
-        void PutProductsBackInStock(Department department, Dictionary<Product, int> requestedProducts);
-        Department MergeDepartments(HashSet<Department> departments, string newName);
+        string hoursStartWork, string minutesStartWork, string hoursEndWork, string minutesEndWork, IStaff staff);
+        void EditClient(string name, string surname, DateTime birthday, IClient client);
+        void AddStaff(IStaff staff);
+        void AddSupplier(ISupplier supplier);
+        void AddSale(ISale sale);
+        void RegisterClient(IClient client);
+        void RemoveDepartment(IDepartment department);
+        void RemoveStaff(IStaff staff);
+        void RemoveSupplier(ISupplier supplier);
+        void RemoveSale(ISale sale);
+        void RemoveClient(IClient client);
+        void SupplyDepartment(IDepartment department, Dictionary<Product, int> requestedProduct);
+        void PutProductsBackInStock(IDepartment department, Dictionary<Product, int> requestedProducts);
+        IDepartment MergeDepartments(HashSet<IDepartment> departments, string newName);
         HashSet<Category> GetAllCategories();
     }
 }
