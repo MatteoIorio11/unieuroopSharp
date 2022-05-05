@@ -40,5 +40,16 @@ namespace unieuroopSharp.Vincenzi
             VIDEO_SURVEILLANCE,
             TABLET
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Product product &&
+                   ProductCode == product.ProductCode;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(ProductCode, PurchasePrice, Name, Brand, SellingPrice, Description, ProductCategory);
+        }
     }
 }
