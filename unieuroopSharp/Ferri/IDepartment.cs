@@ -11,7 +11,7 @@ namespace unieuroopSharp.Ferri
 		/// </summary>
 		/// <param name="products"></param>
 		/// <returns></returns>
-		void AddProducts(Dictionary<Product, int> products);
+		void AddProducts(Dictionary<IProduct, int> products);
 
 		/// <summary>
 		/// This method is used to assigns new Staff in the Department.
@@ -39,7 +39,7 @@ namespace unieuroopSharp.Ferri
 		/// </summary>
 		/// <param name="quantity"></param>
 		/// <returns> products by quantitity</returns>
-		Dictionary<Product, int> ProductsByQuantity(Predicate<int> quantity);
+		Dictionary<IProduct, int> ProductsByQuantity(Predicate<int> quantity);
 
 		/// <summary>
 		/// This method is used to return the entire Staff assigned in the Department.
@@ -53,14 +53,14 @@ namespace unieuroopSharp.Ferri
 		/// </summary>
 		/// <param></param>
 		/// <returns> department products </returns>
-		Dictionary<Product, int> GetAllProducts();
+		Dictionary<IProduct, int> GetAllProducts();
 
 		/// <summary>
 		/// This method is used to return the products and their amount taken from the departments.
 		/// </summary>
 		/// <param name="productsTaken"></param>
 		/// <returns> products taken</returns>
-		Dictionary<Product, int> TakeProductFromDepartment(Dictionary<Product, int> productsTaken);
+		Dictionary<IProduct, int> TakeProductFromDepartment(Dictionary<IProduct, int> productsTaken);
 	}
 }
 

@@ -10,16 +10,16 @@ namespace unieuroopSharp.Ferri
 	{
 		private readonly string _name;
 		private readonly HashSet<IStaff> _staff;
-        private readonly Dictionary<Product, int> _products;
+        private readonly Dictionary<IProduct, int> _products;
 
-		public Department(string nameDepartment, HashSet<IStaff> staff, Dictionary<Product, int> products)
+		public Department(string nameDepartment, HashSet<IStaff> staff, Dictionary<IProduct, int> products)
 		{
 			this._name = nameDepartment;
             this._staff = staff;
             this._products = products;
 		}
 
-		public void AddProducts(Dictionary<Product, int> products)
+		public void AddProducts(Dictionary<IProduct, int> products)
         {
 			foreach (Product product in products.Keys)
             {
@@ -66,9 +66,9 @@ namespace unieuroopSharp.Ferri
             return this._name;
         }
 
-        public Dictionary<Product, int> ProductsByQuantity(Predicate<int> quantity)
+        public Dictionary<IProduct, int> ProductsByQuantity(Predicate<int> quantity)
         {
-            Dictionary<Product, int> prodcutsFilter = new Dictionary<Product, int>();
+            Dictionary<IProduct, int> prodcutsFilter = new Dictionary<IProduct, int>();
             foreach(Product product in this._products.Keys)
             {
                 if (quantity.Invoke(this._products[product]))
@@ -85,12 +85,12 @@ namespace unieuroopSharp.Ferri
             return this._staff;
         }
 
-        public Dictionary<Product, int> GetAllProducts()
+        public Dictionary<IProduct, int> GetAllProducts()
         {
             return this._products;
         }
 
-        public Dictionary<Product, int> TakeProductFromDepartment(Dictionary<Product, int> productsTaken)
+        public Dictionary<IProduct, int> TakeProductFromDepartment(Dictionary<IProduct, int> productsTaken)
         {
             if (!CheckProductsTaken(productsTaken))
             {
@@ -104,7 +104,7 @@ namespace unieuroopSharp.Ferri
             return this._products;
         }
 
-        private bool CheckProductsTaken(Dictionary<Product, int> productsTaken)
+        private bool CheckProductsTaken(Dictionary<IProduct, int> productsTaken)
         {
             foreach(Product productTake in productsTaken.Keys)
             {
