@@ -15,22 +15,22 @@ namespace FerriTest
 		private static readonly int QUANTITY_P1 = 10;
 		private static readonly int FINAL_QUANTITY = 11;
 		private static readonly int FINAL_QUANTITY_P2 = 200;
-		private Department _department;
+		private IDepartment _department;
 		private readonly Product p1 = new Product(1, "iphone 13 pro", Tests.APPLE_PRODUCT, 1200.00, 900.00, "best phone ever created", Product.Category.SMARTPHONE);
 		private readonly Product p2 = new Product(2, "applewatch", Tests.APPLE_PRODUCT, 500.00, 200.00, "best watch ever created", Product.Category.SMARTWATCH);
 		private readonly Product p3 = new Product(3, "mac book pro 14 ", Tests.APPLE_PRODUCT, 3000.00, 2000.00, "best mac book ever created", Product.Category.PC);
 		private readonly Product p4 = new Product(4, "mac book pro 16", Tests.APPLE_PRODUCT, 6000.00, 3000.00, "best mac book ever created", Product.Category.PC);
-		private readonly Staff staff1 = new Staff("Nome1", "Cognome1", Tests.TIME_NOW,
+		private readonly IStaff staff1 = new Staff("Nome1", "Cognome1", Tests.TIME_NOW,
 			"a", "email1@gmail.com", 12, new Dictionary<DayOfWeek, KeyValuePair<DateTime, DateTime>>()
 				{
 					{DayOfWeek.Monday,new KeyValuePair<DateTime, DateTime>(TIME_START, TIME_FINISH)}
 				});
-		private readonly Staff staff2 = new Staff("Nome2", "Cognome2", Tests.TIME_NOW,
+		private readonly IStaff staff2 = new Staff("Nome2", "Cognome2", Tests.TIME_NOW,
 			"b", "email2@gmail.csom", 123, new Dictionary<DayOfWeek, KeyValuePair<DateTime, DateTime>>()
 				{
 					{DayOfWeek.Wednesday,new KeyValuePair<DateTime, DateTime>(TIME_START, TIME_FINISH)}
 				});
-		private readonly Staff staff3 = new Staff("NomeProva", "CognomeProva", Tests.TIME_NOW,
+		private readonly IStaff staff3 = new Staff("NomeProva", "CognomeProva", Tests.TIME_NOW,
 			"c", "email3@gmail.com", 12, new Dictionary<DayOfWeek, KeyValuePair<DateTime, DateTime>>()
 				{
 					{DayOfWeek.Monday,new KeyValuePair<DateTime, DateTime>(TIME_START, TIME_FINISH)}
