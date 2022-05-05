@@ -4,7 +4,7 @@ using System.Text;
 
 namespace unieuroopSharp.Vincenzi
 {
-    public class Product
+    public class Product : IProduct
     {
         public int ProductCode { get; private set; }
         public double PurchasePrice { get; private set; }
@@ -14,23 +14,24 @@ namespace unieuroopSharp.Vincenzi
         public string Description { get; set; }
         public Category ProductCategory { get; set; }
         public Product(
-            int productCode, string name, string brand, double sellingPrice, 
-            double purchasePrice, string description, Category category) {
-        this.ProductCode = productCode;
-        this.Name = name;
-        this.Brand = brand;
-        this.SellingPrice = sellingPrice;
-        this.PurchasePrice = purchasePrice;
-        this.Description = description;
-        this.ProductCategory = category;
-    }
-    public enum Category
+            int productCode, string name, string brand, double sellingPrice,
+            double purchasePrice, string description, Category category)
         {
-            SMARTPHONE,PC,HOME,SMARTWATCH,DOMESTIC_APPLIANCE,
+            this.ProductCode = productCode;
+            this.Name = name;
+            this.Brand = brand;
+            this.SellingPrice = sellingPrice;
+            this.PurchasePrice = purchasePrice;
+            this.Description = description;
+            this.ProductCategory = category;
+        }
+        public enum Category
+        {
+            SMARTPHONE, PC, HOME, SMARTWATCH, DOMESTIC_APPLIANCE,
             COMPUTER,
             PC_DESKTOP,
-            MONITOR,    
-            KEYBOARD,    
+            MONITOR,
+            KEYBOARD,
             MOUSE,
             SCANNER,
             PRINTER,
