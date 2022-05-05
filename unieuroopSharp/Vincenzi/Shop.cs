@@ -105,7 +105,7 @@ namespace unieuroopSharp.Vincenzi
         }
 
 
-        public HashSet<Product.Category> GetAllCategories()
+        public HashSet<IProduct.Category> GetAllCategories()
         {
             return this.Stock.GetTotalStock()
                .Select(entry => entry.Key.ProductCategory)
@@ -115,7 +115,7 @@ namespace unieuroopSharp.Vincenzi
 
         public IDepartment MergeDepartments(HashSet<IDepartment> departments, string newName)
         {
-            Dictionary<Product, int> products = new Dictionary<Product, int>();
+            Dictionary<IProduct, int> products = new Dictionary<IProduct, int>();
             //Get all products from the departments i want to merge.
             departments.Select(d => d.GetAllProducts().AsParallel())
                 .AsParallel()
@@ -153,7 +153,7 @@ namespace unieuroopSharp.Vincenzi
             return dep;
         }
 
-        public void PutProductsBackInStock(IDepartment department, Dictionary<Product, int> requestedProducts)
+        public void PutProductsBackInStock(IDepartment department, Dictionary<IProduct, int> requestedProducts)
         {
             var dep = this.Departments.Where(d => d.Equals(department)).First();
             dep.TakeProductFromDepartment(requestedProducts);
@@ -212,7 +212,7 @@ namespace unieuroopSharp.Vincenzi
             }
         }
 
-        public void SupplyDepartment(IDepartment department, Dictionary<Product, int> requestedProduct)
+        public void SupplyDepartment(IDepartment department, Dictionary<IProduct, int> requestedProduct)
         {
             var dep = this.Departments.Where(d => d.Equals(department)).First();
             var products = this.Stock.TakeFromStock(requestedProduct);
