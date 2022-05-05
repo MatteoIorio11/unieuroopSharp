@@ -17,7 +17,7 @@ namespace unieuroopSharp.Iorio
         /// 
         /// </summary>
         /// <returns></returns>
-        HashSet<Product> GetProducts();
+        HashSet<IProduct> GetProducts();
         /// <summary>
         /// 
         /// </summary>
@@ -28,7 +28,7 @@ namespace unieuroopSharp.Iorio
         /// </summary>
         /// <param name="product"></param>
         /// <returns></returns>
-        int GetQuantityOf(Product product);
+        int GetQuantityOf(IProduct product);
         /// <summary>
         /// 
         /// </summary>

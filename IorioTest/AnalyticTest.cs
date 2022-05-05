@@ -30,21 +30,21 @@ namespace IorioTest
         private static readonly DateTime TIME_NOW = DateTime.Now;
         private Analityc _analytic;
         private Shop _shop = new Shop("prova");
-        private readonly Product p1 = new Product(1, "iphone 13 pro", APPLE_PRODUCT,  1200.00,  900.00, "best phone ever created", Product.Category.SMARTPHONE);
-        private readonly Product p2 = new Product(2, "applewatch", APPLE_PRODUCT, 500.00,  200.00, "best watch ever created", Product.Category.SMARTWATCH);
-        private readonly Product p3 = new Product(3, "mac book pro 14 ", APPLE_PRODUCT,  3000.00, 2000.00, "best mac book ever created", Product.Category.PC);
-        private readonly Product p4 = new Product(4, "mac book pro 16", APPLE_PRODUCT,  6000.00,  3000.00, "best mac book ever created", Product.Category.PC);
-        private readonly Product p5 = new Product(5, "ipad Air ", APPLE_PRODUCT,  700.00,  300.00, "best ipad ever created", Product.Category.HOME);
-        private readonly Product p6 = new Product(6, "ipad Pro", APPLE_PRODUCT, 1000.00, 500.00, "best ipad Pro ever created", Product.Category.HOME);
-        private readonly Product p7 = new Product(7, "ipad Pro Max", APPLE_PRODUCT, 1200.00,  900.00, "best ipad pro max ever created", Product.Category.HOME);
-        private readonly Product p8 = new Product(8, "ipad Pro Max v2", APPLE_PRODUCT, 1200.00, 900.00, "best ipad pro max ever created", Product.Category.HOME);
+        private readonly IProduct p1 = new Product(1, "iphone 13 pro", APPLE_PRODUCT,  1200.00,  900.00, "best phone ever created", Product.Category.SMARTPHONE);
+        private readonly IProduct p2 = new Product(2, "applewatch", APPLE_PRODUCT, 500.00,  200.00, "best watch ever created", Product.Category.SMARTWATCH);
+        private readonly IProduct p3 = new Product(3, "mac book pro 14 ", APPLE_PRODUCT,  3000.00, 2000.00, "best mac book ever created", Product.Category.PC);
+        private readonly IProduct p4 = new Product(4, "mac book pro 16", APPLE_PRODUCT,  6000.00,  3000.00, "best mac book ever created", Product.Category.PC);
+        private readonly IProduct p5 = new Product(5, "ipad Air ", APPLE_PRODUCT,  700.00,  300.00, "best ipad ever created", Product.Category.HOME);
+        private readonly IProduct p6 = new Product(6, "ipad Pro", APPLE_PRODUCT, 1000.00, 500.00, "best ipad Pro ever created", Product.Category.HOME);
+        private readonly IProduct p7 = new Product(7, "ipad Pro Max", APPLE_PRODUCT, 1200.00,  900.00, "best ipad pro max ever created", Product.Category.HOME);
+        private readonly IProduct p8 = new Product(8, "ipad Pro Max v2", APPLE_PRODUCT, 1200.00, 900.00, "best ipad pro max ever created", Product.Category.HOME);
         /**
          * ALL THE SALES THAT WILL BE USED IN THIS TEST.
          */
         [SetUp]
         public void Setup()
         {
-            Dictionary<Product, int> products = new Dictionary<Product, int>();
+            Dictionary<IProduct, int> products = new Dictionary<IProduct, int>();
             products.Add(p1, 10);
             products.Add(p2, 100);
             products.Add(p5, 1);
