@@ -44,7 +44,7 @@ namespace unieuroopSharp.Vincenzi
         {
             if (this.Bills.ContainsKey(date))
             {
-                this.Bills[date] = spent;
+                this.Bills[date] += spent;
             }
             else
             {
