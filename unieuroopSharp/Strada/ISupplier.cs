@@ -9,18 +9,6 @@ namespace unieuroopSharp.Strada
     public interface ISupplier
     {
         /// <summary>
-        /// Return the name of the Supplier.
-        /// </summary>
-        /// <returns> SupllierName </returns>
-        string GetName();
-
-        /// <summary>
-        ///  Return all the supplier products.
-        /// </summary>
-        /// <returns> The entire catalog of the Supplier "ProductsSold" </returns>
-        Dictionary<Product, double> GetCatalog();
-
-        /// <summary>
         /// Return the price of the product by their quantities.
         /// </summary>
         /// <param name="product"></param>
