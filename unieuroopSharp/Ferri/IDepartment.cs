@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using unieuroopSharp.Vincenzi
+using unieuroopSharp.Vincenzi;
 
 namespace unieuroopSharp.Ferri
 {
