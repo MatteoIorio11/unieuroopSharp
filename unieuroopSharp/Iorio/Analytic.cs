@@ -9,9 +9,9 @@ namespace unieuroopSharp.Iorio
 {
     public class Analityc : IAnalityc
     {
-        private readonly Shop _shop;
+        private readonly IShop _shop;
 
-        public Analityc(Shop shop)
+        public Analityc(IShop shop)
         {
             this._shop = shop;
         }
@@ -25,8 +25,7 @@ namespace unieuroopSharp.Iorio
         }
         public Dictionary<Product.Category, int> GetCategoriesSold()
         {
-            return this._shop.Sales
-                    .SelectMany((sale) => sale.GetProducts()
+            return this._shop.Sales.SelectMany((sale) => sale.GetProducts()
                         .Select((product)=>product.ProductCategory)
                         .Distinct())
                     .Distinct()
@@ -36,7 +35,7 @@ namespace unieuroopSharp.Iorio
 
         public Dictionary<IProduct, int> GetOrderedByCategory(Predicate<Product.Category> categories)
         {
-            return this._shop.Sales.SelectMany((sale) => sale.GetProducts().Select((product)=> product as IProduct)
+            return this._shop.Sales.AsEnumerable().SelectMany((sale) => sale.GetProducts().AsEnumerable().Select((product)=> product as IProduct)
                     .Where((product) => categories.Invoke(product.ProductCategory)))
                 .Distinct()
                 .OrderBy((product) => product.Name)
@@ -54,7 +53,7 @@ namespace unieuroopSharp.Iorio
 
         public int GetQuantitySoldOf(IProduct product)
         {
-            return this._shop.Sales.SelectMany((sale) => sale.GetProducts()
+            return this._shop.Sales.SelectMany((sale) => sale.GetProducts().AsEnumerable()
                     .Where((productParallel) => product.Equals(productParallel))
                     .Select((product) => sale.GetQuantityOf(product)))
                 .Sum();
@@ -77,7 +76,7 @@ namespace unieuroopSharp.Iorio
 
         public Dictionary<DateTime, int> GetSoldOnDay(Predicate<DateTime> datePredicate)
         {
-            return this._shop.Sales.Where((sale) => datePredicate.Invoke(sale.GetDate()))
+            return this._shop.Sales.AsEnumerable().Where((sale) => datePredicate.Invoke(sale.GetDate()))
                 .Select((sale) => sale.GetDate())
                 .Distinct()
                 .OrderBy((date) => date)
@@ -92,7 +91,7 @@ namespace unieuroopSharp.Iorio
 
         private double SpentInMonth(int month, Predicate<int> year)
         {
-            return this._shop.Bills.Where((bill) => bill.Key.Month == month && year.Invoke(bill.Key.Year))
+            return this._shop.Bills.AsEnumerable().Where((bill) => bill.Key.Month == month && year.Invoke(bill.Key.Year))
                 .Select((bill) => bill.Value)
                 .Sum();
         }

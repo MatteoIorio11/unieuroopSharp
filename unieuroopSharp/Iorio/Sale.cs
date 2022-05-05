@@ -9,13 +9,13 @@ namespace unieuroopSharp.Iorio
 {
     public class Sale : ISale
     {
-        private readonly Dictionary<Product, int> _products;
+        private readonly Dictionary<IProduct, int> _products;
         private readonly Optional<IClient> _client;
         private readonly DateTime _date;
-        public Sale(DateTime date, Dictionary<Product, int> products, Optional<IClient> client)
+        public Sale(DateTime date, Dictionary<IProduct, int> products, Optional<IClient> client)
         {
             this._date = date;
-            this._products = new Dictionary<Product, int>(products);
+            this._products = new Dictionary<IProduct, int>(products);
             this._client = client;
         }
 
@@ -23,9 +23,9 @@ namespace unieuroopSharp.Iorio
 
         public DateTime GetDate() => this._date;
 
-        public HashSet<Product> GetProducts() => this._products.AsParallel().Select((entry) => entry.Key).ToHashSet();
+        public HashSet<IProduct> GetProducts() => this._products.Select((entry) => entry.Key).ToHashSet();
 
-        public int GetQuantityOf(Product product) => this._products.ContainsKey(product) ? this._products[product] : 0;
+        public int GetQuantityOf(IProduct product) => this._products.ContainsKey(product) ? this._products[product] : 0;
 
         public int GetTotalQuantity() => this._products.Values.AsParallel().Sum();
 
