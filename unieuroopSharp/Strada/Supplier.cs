@@ -18,7 +18,7 @@ namespace unieuroopSharp.Strada
             this.Name = name;
         }
 
-        double GetPriceOf(Product product, int amount)
+        public double GetPriceOf(Product product, int amount)
         {
             if(this.SalableProducts.ContainsKey(product))
             {
@@ -30,10 +30,10 @@ namespace unieuroopSharp.Strada
             }
         }
 
-        double GetTotalPriceByProducts(Dictionary<Product, int> productsPurchased)
+        public double GetTotalPriceByProducts(Dictionary<Product, int> productsPurchased)
         {
             double totalePrice = 0;
-            foreach (Product product in productsPurchased)
+            foreach (Product product in productsPurchased.Keys)
             {
                 if(!this.SalableProducts.ContainsKey(product))
                 {
@@ -44,9 +44,9 @@ namespace unieuroopSharp.Strada
             return totalePrice;
         }
 
-        Dictionary<Product, int> SellProduct(Dictionary<Product, int> productsPurchased)
+        public Dictionary<Product, int> SellProduct(Dictionary<Product, int> productsPurchased)
         {
-            foreach (Product product in productsPurchased)
+            foreach (Product product in productsPurchased.Keys)
             {
                 if(!this.SalableProducts.ContainsKey(product))
                 {
