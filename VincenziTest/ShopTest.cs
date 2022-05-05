@@ -19,7 +19,7 @@ namespace VincenziTest
         private IDepartment _department1;
         private IDepartment _department2;
         private IDepartment _department3;
-        private IShop _shop01;
+        private IShop _shop01 = new Shop("_shop01");
         private readonly HashSet<IDepartment> _departments = new HashSet<IDepartment>();
         /**
          * ALL THE STAFF THAT WILL BE USED IN THIS TEST.
@@ -55,7 +55,6 @@ namespace VincenziTest
         [SetUp]
         public void Setup()
         {
-            this._shop01 = new Shop("_shop01");
             this._department1 = new Department("department1",
                 new HashSet<IStaff>() { this._staff1, this._staff2, this._staff3, this._staff4 },
                 new Dictionary<Product, int>(){

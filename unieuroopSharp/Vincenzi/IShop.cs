@@ -10,6 +10,14 @@ namespace unieuroopSharp.Vincenzi
 {
     public interface IShop
     {
+        HashSet<IDepartment> Departments { get; }
+        HashSet<IStaff> Staffs { get; }
+        HashSet<ISupplier> Suppliers { get; }
+        HashSet<ISale> Sales { get; }
+        HashSet<IClient> RegisteredClients { get; }
+        IStock Stock { get; }
+        Dictionary<DateTime, double> Bills { get; }
+        string Name { get; set; }
         void AddBills(DateTime date, double spent);
         void AddDepartment(IDepartment department);
         void AddStaffIn(IDepartment departmentInput, HashSet<IStaff> staff);
