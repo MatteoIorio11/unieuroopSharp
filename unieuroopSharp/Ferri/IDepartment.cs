@@ -18,14 +18,14 @@ namespace unieuroopSharp.Ferri
 		/// </summary>
 		/// <param name="newStaff"></param>
 		/// <returns></returns>
-		void AddStaff(Staff newStaff);
+		void AddStaff(IStaff newStaff);
 
 		/// <summary>
 		/// This method is used to remove a set of Staff from the assigned Department.
 		/// </summary>
 		/// <param name="deleteStaff"></param>
 		/// <returns></returns>
-		void RemoveStaff(HashSet<Staff> deleteStaff);
+		void RemoveStaff(HashSet<IStaff> deleteStaff);
 
 		/// <summary>
 		/// This method is used to return the Department name.
@@ -46,7 +46,7 @@ namespace unieuroopSharp.Ferri
 		/// </summary>
 		/// <param></param>
 		/// <returns> staffs department </returns>
-		HashSet<Staff> GetStaff();
+		HashSet<IStaff> GetStaff();
 
 		/// <summary>
 		/// This method is used to return all products presents in the Department.

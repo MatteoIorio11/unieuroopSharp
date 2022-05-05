@@ -41,7 +41,7 @@ namespace unieuroopSharp.Ferri
 			return this._surname;
         }
 
-		public DateTime GetBirthday()
+		public DateTime GetBirthdayDate()
         {
 			return this._birthday;
         }

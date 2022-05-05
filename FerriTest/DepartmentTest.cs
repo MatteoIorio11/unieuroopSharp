@@ -39,7 +39,7 @@ namespace FerriTest
 		[SetUp]
 		public void SetUp()
 		{
-			this._department = new Department("department1", new HashSet<Staff>() { staff1, staff2 }, new Dictionary<Product, int>() { p1, 10, p2, 100, p3, 3 });
+			this._department = new Department("department1", new HashSet<IStaff>() { staff1, staff2 }, new Dictionary<Product, int>() { [p1] = 10, [p2] = 100, [p3] = 3 });
 		}
 
 		[Test]
@@ -78,7 +78,7 @@ namespace FerriTest
 		{
 			try
 			{
-				this._department.RemoveStaff(new HashSet<Staff>() { staff1 });
+				this._department.RemoveStaff(new HashSet<IStaff>() { staff1 });
 			}
 			catch (ArgumentException e)
 			{
@@ -91,7 +91,7 @@ namespace FerriTest
 		{
 			try
 			{
-				this._department.RemoveStaff(new HashSet<Staff>() { staff3 });
+				this._department.RemoveStaff(new HashSet<IStaff>() { staff3 });
 				Assert.Fail("ERROR : the exception must be thowned because " + staff3.ToString() + "does not exist in Department");
 			}
 			catch (ArgumentException e)
@@ -120,7 +120,7 @@ namespace FerriTest
 		{
 			try
 			{
-				this._department.TakeProductFromDepartment(new Dictionary<Product, int>() { p1, 1, p3, 3 });
+				this._department.TakeProductFromDepartment(new Dictionary<Product, int>() { [p1] = 1, [p3] = 3 });
 			}
 			catch
 			{
@@ -133,7 +133,7 @@ namespace FerriTest
 		{
 			try
 			{
-				this._department.TakeProductFromDepartment(new Dictionary<Product, int>() { p3, 100 });
+				this._department.TakeProductFromDepartment(new Dictionary<Product, int>() { [p3] = 100 });
 				Assert.Fail("ERROR : this operation can not be done, p30's quantity is less than 100");
 			}
 			catch (ArgumentException e)
@@ -145,7 +145,7 @@ namespace FerriTest
 		[Test]
 		public void testAddProducts()
 		{
-			Dictionary<Product, int> products = new Dictionary<Product, int>() { p1, 1, p2, 100, p3, 10 };
+			Dictionary<Product, int> products = new Dictionary<Product, int>() { [p1] = 1, [p2] = 100, [p3] = 10 };
 			this._department.AddProducts(products);
 			int quantityP1 = this._department.GetAllProducts()[p1];
 			int quantityP2 = this._department.GetAllProducts()[p2];

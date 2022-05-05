@@ -3,14 +3,14 @@ namespace unieuroopSharp.Ferri
 {
 	public class Client : IClient
 	{
-		private readonly BasePerson _person;
+		private readonly IBasePerson _person;
 
 		public Client(string name, string surname, DateTime birthday, string code)
 		{
 			this._person = new BasePerson(name, surname, birthday, code);
 		}
 
-		public BasePerson GetPerson()
+		public IBasePerson GetPerson()
         {
 			return this._person;
         }
@@ -22,7 +22,7 @@ namespace unieuroopSharp.Ferri
 
         public override int GetHashCode()
         {
-            return base.GetHashCode(this._person);
+            return base.GetHashCode() + this._person.GetHashCode();
         }
 
         public override bool Equals(object obj)

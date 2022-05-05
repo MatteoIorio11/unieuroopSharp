@@ -24,7 +24,7 @@ namespace unieuroopSharp.Ferri
 		/// </summary>
 		/// <param name="worktime"></param>
 		/// <returns></returns>
-		void SetWorkTime(Dictionary<DayOfWeek, KeyValuePair<DateTime, DateTime>> worktime)
+		void SetWorkTime(Dictionary<DayOfWeek, KeyValuePair<DateTime, DateTime>> worktime);
 
 		/// <summary>
 		/// This method is used to get the email of the staff.
@@ -52,7 +52,7 @@ namespace unieuroopSharp.Ferri
 		/// </summary>
 		/// <param></param>
 		/// <returns></returns>
-		BasePerson GetPerson();
+		IBasePerson GetPerson();
 
 		/// <summary>
 		/// This method is used to override ToString of the staff.

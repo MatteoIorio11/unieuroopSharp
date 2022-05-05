@@ -9,10 +9,10 @@ namespace unieuroopSharp.Ferri
 	public class Department : IDepartment
 	{
 		private readonly string _name;
-		private readonly HashSet<Staff> _staff;
+		private readonly HashSet<IStaff> _staff;
         private readonly Dictionary<Product, int> _products;
 
-		public Department(string nameDepartment, HashSet<Staff> staff, Dictionary<Product, int> products)
+		public Department(string nameDepartment, HashSet<IStaff> staff, Dictionary<Product, int> products)
 		{
 			this._name = nameDepartment;
             this._staff = staff;
@@ -34,7 +34,7 @@ namespace unieuroopSharp.Ferri
             }
         }
 
-		public void AddStaff(Staff newStaff)
+		public void AddStaff(IStaff newStaff)
         {
             if (!this._staff.Contains(newStaff))
             {
@@ -46,9 +46,9 @@ namespace unieuroopSharp.Ferri
             }
         }
 
-		public void RemoveStaff(HashSet<Staff> deleteStaff)
+		public void RemoveStaff(HashSet<IStaff> deleteStaff)
         {
-            foreach(Staff staff in deleteStaff)
+            foreach(IStaff staff in deleteStaff)
             {
                 if (this._staff.Contains(staff))
                 {
@@ -80,7 +80,7 @@ namespace unieuroopSharp.Ferri
             return prodcutsFilter;
         }
 
-        public HashSet<Staff> GetStaff()
+        public HashSet<IStaff> GetStaff()
         {
             return this._staff;
         }

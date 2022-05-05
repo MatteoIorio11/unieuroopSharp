@@ -8,7 +8,7 @@ namespace unieuroopSharp.Ferri
 		private string _email;
 		private int _password;
 		private Dictionary<DayOfWeek, KeyValuePair<DateTime, DateTime>> _worktime;
-		private readonly BasePerson _person;
+		private readonly IBasePerson _person;
 
 		public Staff(string name, string surname, DateTime birthday, string code, string email, int password, Dictionary<DayOfWeek, KeyValuePair<DateTime, DateTime>> worktime)
 		{
@@ -43,11 +43,11 @@ namespace unieuroopSharp.Ferri
 			return this._password;
         }
 
-		public KeyValuePair<DateTime, DateTime> getWorkTime(DayOfWeek day)
+		public KeyValuePair<DateTime, DateTime> GetWorkTime(DayOfWeek day)
         {
             if (this._worktime.ContainsKey(day))
             {
-				return this._worktime.TryGetValue(day);
+				return this._worktime[day];
             }
             else
             {
@@ -60,7 +60,7 @@ namespace unieuroopSharp.Ferri
 			return new Dictionary<DayOfWeek, KeyValuePair<DateTime, DateTime>>(this._worktime);
         }
 
-		public BasePerson GetPerson()
+		public IBasePerson GetPerson()
         {
 			return this._person;
         }
@@ -72,7 +72,7 @@ namespace unieuroopSharp.Ferri
 
         public override int GetHashCode()
         {
-            return base.GetHashCode(this._email, this._password, this._person, this._worktime);
+            return base.GetHashCode() + this._email.GetHashCode() + this._password.GetHashCode() + this._person.GetHashCode() + this._worktime.GetHashCode();
         }
 
         public override bool Equals(object obj)

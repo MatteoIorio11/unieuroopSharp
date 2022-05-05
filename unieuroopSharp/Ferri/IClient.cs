@@ -9,7 +9,7 @@ namespace unieuroopSharp.Ferri
 		/// </summary>
 		/// <param></param>
 		/// <returns> base person</returns>
-		BasePerson GetPerson();
+		IBasePerson GetPerson();
 
         /// <summary>
         /// This method is used to override ToStrig.
