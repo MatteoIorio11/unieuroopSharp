@@ -26,7 +26,7 @@ namespace unieuroopSharp.Strada
             }
         }
 
-        int GetQuantityOfProduct(IProduct product)
+        public int GetQuantityOfProduct(IProduct product)
         {
             return this._productsStocked[product];
         }
@@ -69,7 +69,7 @@ namespace unieuroopSharp.Strada
             List<IProduct> productFiltered = new List<IProduct>();
             foreach (IProduct product in this._productsStocked.Keys)
             {
-                if(filter(new KeyValuePair<int, Product.Category>(this._productsStocked[product], product.Category)))
+                if(filter(new KeyValuePair<int, Product.Category>(this._productsStocked[product], product.ProductCategory)))
                 {
                     productFiltered.Add(product);
                 }
@@ -98,7 +98,7 @@ namespace unieuroopSharp.Strada
         {
             foreach (IProduct productTaken in productsTaken.Keys)
             {
-                if(!this._productsStocked.ContainsKey(productTaken) || this._productsStocked[productsTaken] < productsTaken[productsTaken])
+                if(!this._productsStocked.ContainsKey(productTaken) || this._productsStocked[productTaken] < productsTaken[productTaken])
                 {
                     return false;
                 }
