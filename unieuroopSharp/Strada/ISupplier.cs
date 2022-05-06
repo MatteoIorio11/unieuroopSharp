@@ -14,20 +14,20 @@ namespace unieuroopSharp.Strada
         /// <param name="product"></param>
         /// <param name="amount"></param>
         /// <returns> ProductPrice returns>
-        double GetPriceOf(Product product, int amount);
+        double GetPriceOf(IProduct product, int amount);
 
         /// <summary>
         /// Return the total prices of the products purchased.
         /// </summary>
         /// <param name="productsPurchased"> Dictiobary of Products purchase from the Supplier </param>
         /// <returns> TotalPrice </returns>
-        double GetTotalPriceByProducts(Dictionary<Product, int> productsPurchased);
+        double GetTotalPriceByProducts(Dictionary<IProduct, int> productsPurchased);
 
         /// <summary>
         /// Sell given products.
         /// </summary>
         /// <param name="productsPurchased"> All the products bought from the Supplier </param>
         /// <returns> productsPurchased from the Supplier </returns>
-        Dictionary<Product, int> SellProduct(Dictionary<Product, int> productsPurchased);
+        Dictionary<IProduct, int> SellProduct(Dictionary<IProduct, int> productsPurchased);
     }
 }

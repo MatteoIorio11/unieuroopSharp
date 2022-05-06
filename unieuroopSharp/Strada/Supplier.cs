@@ -9,16 +9,16 @@ namespace unieuroopSharp.Strada
 {
     public class Supplier : ISupplier
     {
-        public Dictionary<Product, double> SalableProducts { get; private set; }
+        public Dictionary<IProduct, double> SalableProducts { get; private set; }
         public string Name { get; private set; }
 
-        public Supplier(string name, Dictionary<Product, double> catalog)
+        public Supplier(string name, Dictionary<IProduct, double> catalog)
         {
             this.SalableProducts = catalog;
             this.Name = name;
         }
 
-        public double GetPriceOf(Product product, int amount)
+        public double GetPriceOf(IProduct product, int amount)
         {
             if(this.SalableProducts.ContainsKey(product))
             {
@@ -30,10 +30,10 @@ namespace unieuroopSharp.Strada
             }
         }
 
-        public double GetTotalPriceByProducts(Dictionary<Product, int> productsPurchased)
+        public double GetTotalPriceByProducts(Dictionary<IProduct, int> productsPurchased)
         {
             double totalePrice = 0;
-            foreach (Product product in productsPurchased.Keys)
+            foreach (IProduct product in productsPurchased.Keys)
             {
                 if(!this.SalableProducts.ContainsKey(product))
                 {
@@ -44,9 +44,9 @@ namespace unieuroopSharp.Strada
             return totalePrice;
         }
 
-        public Dictionary<Product, int> SellProduct(Dictionary<Product, int> productsPurchased)
+        public Dictionary<IProduct, int> SellProduct(Dictionary<IProduct, int> productsPurchased)
         {
-            foreach (Product product in productsPurchased.Keys)
+            foreach (IProduct product in productsPurchased.Keys)
             {
                 if(!this.SalableProducts.ContainsKey(product))
                 {

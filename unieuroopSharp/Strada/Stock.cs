@@ -9,11 +9,11 @@ namespace unieuroopSharp.Strada
 {
     public class Stock : IStock
     {
-        private readonly Dictionary<Product, int> _productsStocked;
+        private readonly Dictionary<IProduct, int> _productsStocked;
 
-        public void AddProducts(Dictionary<Product, int> products)
+        public void AddProducts(Dictionary<IProduct, int> products)
         {
-            foreach (Product product in products.Keys)
+            foreach (IProduct product in products.Keys)
             {
                 if (this._productsStocked.ContainsKey(product))
                 {
@@ -26,43 +26,48 @@ namespace unieuroopSharp.Strada
             }
         }
 
-        public Dictionary<Product, int> GetTotalStock()
+        int GetQuantityOfProduct(IProduct product)
         {
-            return new Dictionary<Product, int>(this._productsStocked);
+            return this._productsStocked[product];
         }
 
-        public Dictionary<Product, int> TakeFromStock(Dictionary<Product, int> productsTaken)
+        public Dictionary<IProduct, int> GetTotalStock()
+        {
+            return new Dictionary<IProduct, int>(this._productsStocked);
+        }
+
+        public Dictionary<IProduct, int> TakeFromStock(Dictionary<IProduct, int> productsTaken)
         {
             if (!this.CheckProductsTaken(productsTaken))
             {
                 throw new ArgumentException("Some products can not be taken");
             }
-            foreach (Product productTaken in productsTaken.Keys)
+            foreach (IProduct productTaken in productsTaken.Keys)
             {
                 this._productsStocked[productTaken] -= productsTaken[productTaken];
             }
             return productsTaken;
         }
 
-        public void DeleteProducts(HashSet<Product> productsDelete)
+        public void DeleteProducts(HashSet<IProduct> productsDelete)
         {
-            foreach (Product product in productsDelete)
+            foreach (IProduct product in productsDelete)
             {
                 if (!this._productsStocked.ContainsKey(product))
                 {
                     throw new ArgumentException("Some products can not be Deleted");
                 }
             }
-            foreach (Product product in productsDelete)
+            foreach (IProduct product in productsDelete)
             {
                 this._productsStocked.Remove(product);
             }
         }
 
-        public List<Product> GetFilterProducts(Predicate<KeyValuePair<int, Product.Category>> filter)
+        public List<IProduct> GetFilterProducts(Predicate<KeyValuePair<int, Product.Category>> filter)
         {
-            List<Product> productFiltered = new List<Product>();
-            foreach (Product product in this._productsStocked.Keys)
+            List<IProduct> productFiltered = new List<IProduct>();
+            foreach (IProduct product in this._productsStocked.Keys)
             {
                 if(filter(new KeyValuePair<int, Product.Category>(this._productsStocked[product], product.Category)))
                 {
@@ -72,9 +77,9 @@ namespace unieuroopSharp.Strada
             return productFiltered;
         }
 
-        public List<Product> GetProductsSorted(Comparer<Product> sorting)
+        public List<IProduct> GetProductsSorted(Comparer<IProduct> sorting)
         {
-            List<Product> productSorted = new List<Product>();
+            List<IProduct> productSorted = new List<IProduct>();
             productSorted.Sort(sorting);
             return productSorted;
         }
@@ -89,9 +94,9 @@ namespace unieuroopSharp.Strada
         /// </summary>
         /// <param name="productsTaken"> productsTaken </param>
         /// <returns> True or False if is possible or not </returns>
-        private bool CheckProductsTaken(Dictionary<Product, int> productsTaken)
+        private bool CheckProductsTaken(Dictionary<IProduct, int> productsTaken)
         {
-            foreach (Product productTaken in productsTaken.Keys)
+            foreach (IProduct productTaken in productsTaken.Keys)
             {
                 if(!this._productsStocked.ContainsKey(productTaken) || this._productsStocked[productsTaken] < productsTaken[productsTaken])
                 {

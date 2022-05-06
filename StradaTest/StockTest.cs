@@ -25,15 +25,17 @@ namespace StradaTest
         private static readonly String DESCRIPTION_P2 = "Best Phone Ever Created";
         private static readonly String DESCRIPTION_P3 = "Best MacBook Ever Created";
         private static readonly String DESCRIPTION_P4 = "Best Ipad Ever";
+        private static readonly String DESCRIPTION_P5 = "Best Samsung Phone Ever";
         private readonly IShop shop = new Shop("Shop Test");
+        Dictionary<IProduct, int> products = new Dictionary<IProduct, int>();
 
         private readonly IProduct product1 = new Product(1, IPHONE_13_PRO, APPLE_PRODUCT,  1200.00,  900.00, DESCRIPTION_P1, Product.Category.SMARTPHONE);
         private readonly IProduct product2 = new Product(2, APPLEWATCH, APPLE_PRODUCT, 500.00,  200.00, DESCRIPTION_P2, Product.Category.SMARTWATCH);
         private readonly IProduct product3 = new Product(3, MAC_BOOK_14, APPLE_PRODUCT,  3000.00, 2000.00, DESCRIPTION_P3, Product.Category.PC);
-        private readonly IProduct product4 = new Product(4, MAC_BOOK_16, APPLE_PRODUCT,  6000.00,  3000.00, DESCRIPTION_P3, Category.PC);
-        private readonly IProduct product5 = new Product(5, IPAD_AIR, APPLE_PRODUCT,  700.00,  300.00, DESCRIPTION_P4, Category.HOME);
-        private readonly IProduct product6 = new Product(6, IPAD_PRO, APPLE_PRODUCT, 1000.00, 500.00, DESCRIPTION_P4, Category.HOME);
-        private readonly IProduct product7 = new Product(7, SAMSUNG_S7, SAMSUNG_PRODUCT, 1200.00,  900.00, "best ipad pro max ever created", Category.HOME);
+        private readonly IProduct product4 = new Product(4, MAC_BOOK_16, APPLE_PRODUCT,  6000.00,  3000.00, DESCRIPTION_P3, Product.Category.PC);
+        private readonly IProduct product5 = new Product(5, IPAD_AIR, APPLE_PRODUCT,  700.00,  300.00, DESCRIPTION_P4, Product.Category.TABLET);
+        private readonly IProduct product6 = new Product(6, IPAD_PRO, APPLE_PRODUCT, 1000.00, 500.00, DESCRIPTION_P4, Product.Category.TABLET);
+        private readonly IProduct product7 = new Product(7, SAMSUNG_S7, SAMSUNG_PRODUCT, 1200.00,  900.00, DESCRIPTION_P5, Product.Category.HOME);
 
         /**
          * ALL THE SALES THAT WILL BE USED IN THIS TEST.
@@ -42,13 +44,119 @@ namespace StradaTest
         [SetUp]
         public void Setup()
         {
-            
+            products.Add(product1, 1);
+            products.Add(product2, 2);
+            products.Add(product3, 1);
+            products.Add(product4, 2);
+            products.Add(product5, 3);
+            products.Add(product6, 30);
+            products.Add(product7, 5);
         }
 
         [Test]
-        public void Test1()
+        public void TestAddProducts()
         {
-            Assert.Pass();
+            this.shop.Stock.AddProducts(products);
+            Assert.AreEqual(this.products, this.shop.Stock.GetTotalStock());
+        }
+
+        [Test]
+        public void TestQuantityOf()
+        {
+            this.shop.Stock.AddProducts(products);
+            Assert.AreEqual(1, this.shop.Stock.GetQuantityOfProduct(product1));
+            Assert.AreEqual(2, this.shop.Stock.GetQuantityOfProduct(product2));
+            Assert.AreEqual(1, this.shop.Stock.GetQuantityOfProduct(product3));
+            Assert.AreEqual(1, this.shop.Stock.GetQuantityOfProduct(product4));
+        }
+
+        [Test]
+        public void TestTakeFromStock1()
+        {
+            this.shop.Stock.AddProducts(products);
+            Dictionary<IProduct, int> productTaken = new Dictionary<IProduct, int>();
+            productTaken.Add(product1, 1);
+            this.products[product1] -= 1;
+            try
+            {
+                this.shop.Stock.TakeFromStock(productTaken);
+                Assert.AreEqual(this.products, this.shop.Stock.GetTotalStock());
+            }
+            catch (ArgumentException e)
+            {
+                Assert.Fail("No exception have to be thrown");
+            }
         }
     }
+
+    [Test]
+        public void TestTakeFromStock2()
+        {
+            this.shop.Stock.AddProducts(products);
+            Dictionary<IProduct, int> productTaken = new Dictionary<IProduct, int>();
+            productTaken.Add(product1, 100);
+            try
+            {
+                this.shop.Stock.TakeFromStock(productTaken);
+                Assert.Fail("Exception have to be thrown");
+            }
+            catch (ArgumentException e)
+            {
+                Assert.Fail("Some Products can not be Taken \n" + e.Message);
+            }
+        }
+
+        [Test]
+        public void TestDeleteProduct1()
+        {
+            HashSet<IProduct> productsDeleted = new HashSet<IProduct>();
+            productsDeleted.Add(this.product7);
+            try
+            {
+                this.shop.Stock.DeleteProducts(productsDeleted);
+            }
+            catch (ArgumentException e)
+            {
+                Assert.Fail("Product product1 exist inside the stock.");
+            }
+        }
+
+        [Test]
+        public void TestDeleteProduct2()
+        {
+            HashSet<IProduct> productsDeleted = new HashSet<IProduct>();
+            IProduct product8 = new Product(8, SAMSUNG_S7, SAMSUNG_PRODUCT, 1200.00,  900.00, DESCRIPTION_P5, Product.Category.HOME);
+            productsDeleted.Add(this.product8);
+            try
+            {
+                this.shop.Stock.DeleteProducts(productsDeleted);
+                Assert.Fail("Product product8 does not exist inside the stock.");
+            }
+            catch (ArgumentException e)
+            {
+                Assert.Fail("Some Products can not be Deleted \n" + e.Message);
+            }
+        }
+
+        [Test]
+        public void TestFilterProducts()
+        {
+            List<IProduct> productsFiltered = new List<IProduct>();
+            productsFiltered.Add(this.product7);
+            KeyValuePair<int, Product.Category> quantityAndCayegory = new KeyValuePair<int, Product.Category>(5, Product.Category.HOME);
+            Predicate<KeyValuePair<int, Product.Category>> filter = new Predicate<KeyValuePair<int, Product.Category>>(quantityAndCayegory);
+            Assert.AreEqual(productsFiltered, this.shop.Stock.GetFilterProducts(filter));
+        }
+
+        [Test]
+        public void TestSortProducts()
+        {
+
+        }
+
+        [Test]
+        public void TestGetMax()
+        {
+            Assert.AreEqual(30, this.shop.Stock.GetMaxAmountOfProducts());
+        }
 }
