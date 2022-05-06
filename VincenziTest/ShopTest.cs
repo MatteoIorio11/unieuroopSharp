@@ -57,7 +57,7 @@ namespace VincenziTest
         {
             this._department1 = new Department("department1",
                 new HashSet<IStaff>() { this._staff1, this._staff2, this._staff3, this._staff4 },
-                new Dictionary<Product, int>(){
+                new Dictionary<IProduct, int>(){
                 { this._p1, 2 },
                 { this._p2, 1 },
                 { this._p3, 2 },
@@ -65,13 +65,13 @@ namespace VincenziTest
             });
             this._department2 = new Department("department2",
                 new HashSet<IStaff>() { this._staff1, this._staff2 },
-                new Dictionary<Product, int>(){
+                new Dictionary<IProduct, int>(){
                 { this._p1, 2 },
                 { this._p4, 2 }
             });
             this._department3 = new Department("department3",
                 new HashSet<IStaff>() { this._staff3, this._staff4 },
-                new Dictionary<Product, int>(){
+                new Dictionary<IProduct, int>(){
                 { this._p2, 1 },
                 { this._p3, 2 }
             });
@@ -95,9 +95,9 @@ namespace VincenziTest
         [Test]
         public void TestSupplyDepartment()
         {
-            this._shop01.Stock.AddProducts(new Dictionary<Product, int>() { { this._p1, 10 }, { this._p2, 10 }, { this._p3, 10 }, { this._p4, 10 } });
-            this._shop01.SupplyDepartment(this._department1, new Dictionary<Product, int>() { { this._p1, 2 }, { this._p2, 2 } });
-            this._shop01.SupplyDepartment(this._department3, new Dictionary<Product, int>() { { this._p4, 1 } });
+            this._shop01.Stock.AddProducts(new Dictionary<IProduct, int>() { { this._p1, 10 }, { this._p2, 10 }, { this._p3, 10 }, { this._p4, 10 } });
+            this._shop01.SupplyDepartment(this._department1, new Dictionary<IProduct, int>() { { this._p1, 2 }, { this._p2, 2 } });
+            this._shop01.SupplyDepartment(this._department3, new Dictionary<IProduct, int>() { { this._p4, 1 } });
             Assert.Equals(new Dictionary<Product, int>() { { this._p1, 4 }, { this._p2, 3 }, { this._p3, 2 }, { this._p4, 2 } }, this._department1.GetAllProducts());
             Assert.Equals(new Dictionary<Product, int>() { { this._p2, 1 }, { this._p3, 2 }, { this._p4, 1 } }, this._department3.GetAllProducts());
         }
@@ -123,9 +123,9 @@ namespace VincenziTest
         [Test]
         public void TestRemoveSale1()
         {
-            ISale sale1 = new Sale(DATE_NOW, new Dictionary<Product, int>() { { this._p1, 10 }, { this._p2, 100 } }, Optional<IClient>.Empty());
-            ISale sale2 = new Sale(DATE_NOW, new Dictionary<Product, int>() { { this._p1, 1 } }, Optional<IClient>.Empty());
-            ISale sale3 = new Sale(DATE_NOW, new Dictionary<Product, int>() { { this._p1, 1 } }, Optional<IClient>.Empty());
+            ISale sale1 = new Sale(DATE_NOW, new Dictionary<IProduct, int>() { { this._p1, 10 }, { this._p2, 100 } }, Optional<IClient>.Empty());
+            ISale sale2 = new Sale(DATE_NOW, new Dictionary<IProduct, int>() { { this._p1, 1 } }, Optional<IClient>.Empty());
+            ISale sale3 = new Sale(DATE_NOW, new Dictionary<IProduct, int>() { { this._p1, 1 } }, Optional<IClient>.Empty());
 
             this._shop01.AddSale(sale1);
             this._shop01.AddSale(sale2);
@@ -142,9 +142,9 @@ namespace VincenziTest
         [Test]
         public void TestRemoveSupplier1()
         {
-            ISupplier supp1 = new Supplier("Supplier1", new Dictionary<Product, double>() { { this._p1, 10.0 }, { this._p2, 40.0 }, { this._p3, 1.0 } });
-            ISupplier supp2 = new Supplier("Supplier2", new Dictionary<Product, double>() { { this._p1, 5.0 }, { this._p2, 10.0 } });
-            ISupplier supp3 = new Supplier("Supplier2", new Dictionary<Product, double>() { { this._p1, 1.0 } });
+            ISupplier supp1 = new Supplier("Supplier1", new Dictionary<IProduct, double>() { { this._p1, 10.0 }, { this._p2, 40.0 }, { this._p3, 1.0 } });
+            ISupplier supp2 = new Supplier("Supplier2", new Dictionary<IProduct, double>() { { this._p1, 5.0 }, { this._p2, 10.0 } });
+            ISupplier supp3 = new Supplier("Supplier2", new Dictionary<IProduct, double>() { { this._p1, 1.0 } });
 
             this._shop01.AddSupplier(supp1);
             this._shop01.AddSupplier(supp2);
@@ -177,7 +177,7 @@ namespace VincenziTest
         [Test]
         public void TestRemoveDepartment2()
         {
-            IDepartment departmentTemp = new Department("departmentTemp", new HashSet<IStaff>() { this._staff1, this._staff2 }, new Dictionary<Product, int>() {{ this._p1, 5 }});
+            IDepartment departmentTemp = new Department("departmentTemp", new HashSet<IStaff>() { this._staff1, this._staff2 }, new Dictionary<IProduct, int>() {{ this._p1, 5 }});
 
             try
             {

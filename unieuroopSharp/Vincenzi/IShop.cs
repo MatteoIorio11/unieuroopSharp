@@ -34,8 +34,8 @@ namespace unieuroopSharp.Vincenzi
         void RemoveSupplier(ISupplier supplier);
         void RemoveSale(ISale sale);
         void RemoveClient(IClient client);
-        void SupplyDepartment(IDepartment department, Dictionary<Product, int> requestedProduct);
-        void PutProductsBackInStock(IDepartment department, Dictionary<Product, int> requestedProducts);
+        void SupplyDepartment(IDepartment department, Dictionary<IProduct, int> requestedProduct);
+        void PutProductsBackInStock(IDepartment department, Dictionary<IProduct, int> requestedProducts);
         IDepartment MergeDepartments(HashSet<IDepartment> departments, string newName);
         HashSet<Category> GetAllCategories();
     }
