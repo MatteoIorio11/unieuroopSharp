@@ -64,12 +64,12 @@ namespace unieuroopSharp.Strada
             }
         }
 
-        public List<IProduct> GetFilterProducts(Predicate<KeyValuePair<int, Product.Category>> filter)
+        public List<IProduct> GetFilterProducts(Predicate<Tuple<int, Product.Category>> filter)
         {
             List<IProduct> productFiltered = new List<IProduct>();
             foreach (IProduct product in this._productsStocked.Keys)
             {
-                if(filter(new KeyValuePair<int, Product.Category>(this._productsStocked[product], product.ProductCategory)))
+                if(filter(new Tuple<int, Product.Category>(this._productsStocked[product], product.ProductCategory)))
                 {
                     productFiltered.Add(product);
                 }
