@@ -7,7 +7,7 @@ using unieuroopSharp.Strada;
 using System;
 using System.Linq;
 using System.Collections.Generic;
-
+ 
 namespace StradaTest
 {
     public class Tests
@@ -27,8 +27,8 @@ namespace StradaTest
         private static readonly String DESCRIPTION_P4 = "Best Ipad Ever";
         private static readonly String DESCRIPTION_P5 = "Best Samsung Phone Ever";
         private IShop shop;
-        Dictionary<IProduct, int> products = new Dictionary<IProduct, int>();
-
+        Dictionary<IProduct, int> products;
+ 
         private readonly IProduct product1 = new Product(1, IPHONE_13_PRO, APPLE_PRODUCT,  1200.00,  900.00, DESCRIPTION_P1, Product.Category.SMARTPHONE);
         private readonly IProduct product2 = new Product(2, APPLEWATCH, APPLE_PRODUCT, 500.00,  200.00, DESCRIPTION_P2, Product.Category.SMARTWATCH);
         private readonly IProduct product3 = new Product(3, MAC_BOOK_14, APPLE_PRODUCT,  3000.00, 2000.00, DESCRIPTION_P3, Product.Category.PC);
@@ -36,14 +36,15 @@ namespace StradaTest
         private readonly IProduct product5 = new Product(5, IPAD_AIR, APPLE_PRODUCT,  700.00,  300.00, DESCRIPTION_P4, Product.Category.TABLET);
         private readonly IProduct product6 = new Product(6, IPAD_PRO, APPLE_PRODUCT, 1000.00, 500.00, DESCRIPTION_P4, Product.Category.TABLET);
         private readonly IProduct product7 = new Product(7, SAMSUNG_S7, SAMSUNG_PRODUCT, 1200.00,  900.00, DESCRIPTION_P5, Product.Category.HOME);
-
+ 
         /**
          * ALL THE SALES THAT WILL BE USED IN THIS TEST.
         */
-
+ 
         [SetUp]
         public void Setup()
         {
+            products = new Dictionary<IProduct, int>();
             shop = new Shop("Shop Test");
             products.Add(product1, 1);
             products.Add(product2, 2);
@@ -54,7 +55,7 @@ namespace StradaTest
             products.Add(product7, 5);
             this.shop.Stock.AddProducts(products);
         }
-
+ 
         [Test]
         public void TestAddProducts()
         {
@@ -66,22 +67,20 @@ namespace StradaTest
             Assert.AreEqual(this.products, this.shop.Stock.GetTotalStock());
             this.shop = null;
         }
-
+ 
         [Test]
         public void TestQuantityOf()
         {
-            this.shop.Stock.AddProducts(products);
             Assert.AreEqual(1, this.shop.Stock.GetQuantityOfProduct(product1));
             Assert.AreEqual(2, this.shop.Stock.GetQuantityOfProduct(product2));
             Assert.AreEqual(1, this.shop.Stock.GetQuantityOfProduct(product3));
-            Assert.AreEqual(1, this.shop.Stock.GetQuantityOfProduct(product4));
+            Assert.AreEqual(2, this.shop.Stock.GetQuantityOfProduct(product4));
             this.shop = null;
         }
-
+ 
         [Test]
         public void TestTakeFromStock1()
         {
-            this.shop.Stock.AddProducts(products);
             Dictionary<IProduct, int> productTaken = new Dictionary<IProduct, int>();
             productTaken.Add(product1, 1);
             this.products[product1] -= 1;
@@ -96,11 +95,10 @@ namespace StradaTest
             }
             this.shop = null;
         }
-
+ 
         [Test]
         public void TestTakeFromStock2()
         {
-            this.shop.Stock.AddProducts(products);
             Dictionary<IProduct, int> productTaken = new Dictionary<IProduct, int>();
             productTaken.Add(product1, 100);
             try
@@ -110,11 +108,11 @@ namespace StradaTest
             }
             catch (ArgumentException e)
             {
-                Assert.Fail("Some Products can not be Taken \n" + e.Message);
+                Assert.AreEqual("Some products can not be taken", e.Message);
             }
             this.shop = null;
         }
-
+ 
         [Test]
         public void TestDeleteProduct1()
         {
@@ -130,7 +128,7 @@ namespace StradaTest
             }
             this.shop = null;
         }
-
+ 
         [Test]
         public void TestDeleteProduct2()
         {
@@ -144,11 +142,11 @@ namespace StradaTest
             }
             catch (ArgumentException e)
             {
-                Assert.Fail("Some Products can not be Deleted \n" + e.Message);
+                Assert.AreEqual("Some products can not be Deleted", e.Message);
             }
             this.shop = null;
         }
-
+ 
         [Test]
         public void TestFilterProducts()
         {
@@ -162,7 +160,6 @@ namespace StradaTest
             this.shop.Stock.AddProducts(dictionary);
             Assert.True(this.shop.Stock.GetFilterProducts((tuple) => tuple.Item2 == Product.Category.SMARTPHONE).All((element) => element.ProductCode == p1.ProductCode));
             Assert.True(this.shop.Stock.GetFilterProducts((tuple) => tuple.Item2 == Product.Category.SMARTWATCH).All((element) => element.ProductCode == p2.ProductCode));
-            Assert.True(this.shop.Stock.GetFilterProducts((tuple) => tuple.Item2 == Product.Category.PC).All((element) => element.ProductCode == p3.ProductCode));
             var list = new List<IProduct>();
             list.Add(p1);
             list.Add(p2);
@@ -170,22 +167,34 @@ namespace StradaTest
             Assert.True(this.shop.Stock.GetFilterProducts((tuple) => tuple.Item1 == 1 && tuple.Item2 == Product.Category.DOMESTIC_APPLIANCE).Count == 0);
             this.shop = null;
         }
-
+ 
         [Test]
         public void TestSortProducts()
         {
-            List<IProduct> productsSortedIncreasing = new List<IProduct>();
-            productsSortedIncreasing.Add(this.product1);
-            productsSortedIncreasing.Add(this.product3);
-            productsSortedIncreasing.Add(this.product2);
-            productsSortedIncreasing.Add(this.product4);
-            productsSortedIncreasing.Add(this.product5);
-            productsSortedIncreasing.Add(this.product7);
-            productsSortedIncreasing.Add(this.product6);
-            Assert.AreEqual(productsSortedIncreasing, this.shop.Stock.GetProductsSorted(Comparer<IProduct>.Create((p1, p2) => this.shop.Stock.GetQuantityOfProduct(p1) - this.shop.Stock.GetQuantityOfProduct(p2))));
+            List<IProduct> productsNotSorted = new List<IProduct>();
+            productsNotSorted.Add(this.product1);
+            productsNotSorted.Add(this.product3);
+            productsNotSorted.Add(this.product2);
+            productsNotSorted.Add(this.product4);
+            productsNotSorted.Add(this.product5);
+            productsNotSorted.Add(this.product6);
+            productsNotSorted.Add(this.product7);
+            //productsSortedIncreasing.ForEach(a => Console.WriteLine();
+            var list = this.shop.Stock
+            .GetProductsSorted(Comparer<IProduct>.Create((p1, p2) => p1.ProductCode.CompareTo(p2.ProductCode)));
+            Assert.AreNotEqual(productsNotSorted, list);
+            var productsSorted = new List<IProduct>();
+            productsSorted.Add(this.product1);
+            productsSorted.Add(this.product2);
+            productsSorted.Add(this.product3);
+            productsSorted.Add(this.product4);
+            productsSorted.Add(this.product5);
+            productsSorted.Add(this.product6);
+            productsSorted.Add(this.product7);
+            Assert.AreEqual(list, productsSorted);
             this.shop = null;
         }
-
+ 
         [Test]
         public void TestGetMax()
         {

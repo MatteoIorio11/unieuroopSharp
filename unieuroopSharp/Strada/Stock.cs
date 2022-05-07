@@ -79,7 +79,7 @@ namespace unieuroopSharp.Strada
 
         public List<IProduct> GetProductsSorted(Comparer<IProduct> sorting)
         {
-            List<IProduct> productSorted = new List<IProduct>();
+            List<IProduct> productSorted = this._productsStocked.Select(entry => entry.Key).ToList();
             productSorted.Sort(sorting);
             return productSorted;
         }
