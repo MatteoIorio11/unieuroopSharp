@@ -26,7 +26,7 @@ namespace StradaTest
         private static readonly String DESCRIPTION_P3 = "Best MacBook Ever Created";
         private static readonly String DESCRIPTION_P4 = "Best Ipad Ever";
         private static readonly String DESCRIPTION_P5 = "Best Samsung Phone Ever";
-        private readonly IShop shop;
+        private IShop shop;
         Dictionary<IProduct, int> products = new Dictionary<IProduct, int>();
 
         private readonly IProduct product1 = new Product(1, IPHONE_13_PRO, APPLE_PRODUCT,  1200.00,  900.00, DESCRIPTION_P1, Product.Category.SMARTPHONE);
