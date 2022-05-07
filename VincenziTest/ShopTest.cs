@@ -85,12 +85,12 @@ namespace VincenziTest
         }
 
         [Test]
-        public void TestMergeDepartments()
+            public void TestMergeDepartments()
         {
             var departmentTemp = this._shop01.MergeDepartments(_departments, "finalDep");
-            Assert.Equals("finalDep", departmentTemp.GetDepartmentName());
-            Assert.Equals(departmentTemp.GetAllProducts(), new Dictionary<Product, int>() { { this._p1, 4 }, { this._p2, 2 }, { this._p3, 4 }, { this._p4, 4 } });
-            Assert.Equals(new HashSet<IStaff>() { this._staff1, this._staff2, this._staff3, this._staff4 }, departmentTemp.GetStaff());
+            Assert.AreEqual("finalDep", departmentTemp.GetDepartmentName());
+            Assert.AreEqual(departmentTemp.GetAllProducts(), new Dictionary<Product, int>() { { this._p1, 4 }, { this._p2, 2 }, { this._p3, 4 }, { this._p4, 4 } });
+            Assert.AreEqual(new HashSet<IStaff>() { this._staff1, this._staff2, this._staff3, this._staff4 }, departmentTemp.GetStaff());
         }
         [Test]
         public void TestSupplyDepartment()
@@ -98,8 +98,8 @@ namespace VincenziTest
             this._shop01.Stock.AddProducts(new Dictionary<IProduct, int>() { { this._p1, 10 }, { this._p2, 10 }, { this._p3, 10 }, { this._p4, 10 } });
             this._shop01.SupplyDepartment(this._department1, new Dictionary<IProduct, int>() { { this._p1, 2 }, { this._p2, 2 } });
             this._shop01.SupplyDepartment(this._department3, new Dictionary<IProduct, int>() { { this._p4, 1 } });
-            Assert.Equals(new Dictionary<Product, int>() { { this._p1, 4 }, { this._p2, 3 }, { this._p3, 2 }, { this._p4, 2 } }, this._department1.GetAllProducts());
-            Assert.Equals(new Dictionary<Product, int>() { { this._p2, 1 }, { this._p3, 2 }, { this._p4, 1 } }, this._department3.GetAllProducts());
+            Assert.AreEqual(new Dictionary<Product, int>() { { this._p1, 2 }, { this._p2, 2 } }, this._department1.GetAllProducts());
+            Assert.AreEqual(new Dictionary<Product, int>() { { this._p4, 1 } }, this._department3.GetAllProducts());
         }
         [Test]
         public void TestRemoveClient1()
@@ -116,7 +116,7 @@ namespace VincenziTest
             }
             catch (ArgumentException e)
             {
-                Assert.Equals("The input client does not exist", e.Message);
+                Assert.AreEqual("The input client does not exist", e.Message);
             }
         }
 
@@ -136,7 +136,7 @@ namespace VincenziTest
             }
             catch (ArgumentException e)
             {
-                Assert.Equals("The input sale does not exist", e.Message);
+                Assert.AreEqual("The input sale does not exist", e.Message);
             }
         }
         [Test]
@@ -155,7 +155,7 @@ namespace VincenziTest
             }
             catch (ArgumentException e)
             {
-                Assert.Equals("The input supplier does not exist", e.Message);
+                Assert.AreEqual("The input supplier does not exist", e.Message);
             }
         }
         [Test]
@@ -171,7 +171,7 @@ namespace VincenziTest
             }
             catch (ArgumentException e)
             {
-                Assert.Equals("The input staff does not exist", e.Message);
+                Assert.AreEqual("The input staff does not exist", e.Message);
             }
         }
         [Test]
@@ -185,7 +185,7 @@ namespace VincenziTest
             }
             catch (ArgumentException e)
             {
-                Assert.Equals("The input department does not exist", e.Message);
+                Assert.AreEqual("The input department does not exist", e.Message);
             }
         }
     }
