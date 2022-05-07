@@ -105,7 +105,7 @@ namespace unieuroopSharp.Vincenzi
         }
 
 
-        public HashSet<IProduct.Category> GetAllCategories()
+        public HashSet<Product.Category> GetAllCategories()
         {
             return this.Stock.GetTotalStock()
                .Select(entry => entry.Key.ProductCategory)
