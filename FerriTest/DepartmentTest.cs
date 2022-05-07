@@ -52,7 +52,7 @@ namespace FerriTest
 			}
 			catch (InvalidOperationException e)
 			{
-				Assert.Fail("ERROR wrong exception throwned.");
+				Assert.Fail(e.Message + "\nERROR wrong exception throwned.");
 			}
 			catch (ArgumentException e1)
 			{
@@ -69,7 +69,7 @@ namespace FerriTest
 			}
 			catch (ArgumentException e)
 			{
-				Assert.Fail("ERROR this staff is not contained in the department so the Exception must not be throwned.");
+				Assert.Fail(e.Message + "\nERROR this staff is not contained in the department so the Exception must not be throwned.");
 			}
 		}
 
@@ -82,7 +82,7 @@ namespace FerriTest
 			}
 			catch (ArgumentException e)
 			{
-				Assert.Fail("ERROR : this staff is present and the exception must not be throwned.");
+				Assert.Fail(e.Message + "\nERROR : this staff is present and the exception must not be throwned.");
 			}
 		}
 
