@@ -117,11 +117,11 @@ namespace unieuroopSharp.Vincenzi
         {
             Dictionary<IProduct, int> products = new Dictionary<IProduct, int>();
             //Get all products from the departments i want to merge.
-            departments.Select(d => d.GetAllProducts().AsParallel())
-                .AsParallel()
-                .ForAll(m =>
+            departments.Select(d => d.GetAllProducts().ToList())
+                .ToList()
+                .ForEach(m =>
                 {
-                    m.ForAll(p =>
+                    m.ForEach(p =>
                     {
                         if (products.ContainsKey(p.Key))
                         {

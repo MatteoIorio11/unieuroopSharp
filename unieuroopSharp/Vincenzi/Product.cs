@@ -52,5 +52,9 @@ namespace unieuroopSharp.Vincenzi
         {
             return HashCode.Combine(ProductCode, PurchasePrice, Name, Brand, SellingPrice, Description, ProductCategory);
         }
+        public override string ToString()
+        {
+            return "code: " + this.ProductCode + " name: " + this.Name;
+        }
     }
 }
