@@ -58,10 +58,10 @@ namespace StradaTest
         [Test]
         public void TestAddProducts()
         {
-            IProduct product8 = new Product(8, SAMSUNG_S7, SAMSUNG_PRODUCT, 1200.00,  900.00, DESCRIPTION_P5, Product.Category.DOMESTIC_APPLIANCE);
+            IProduct product8 = new Product(8, SAMSUNG_S7, SAMSUNG_PRODUCT, 1200.00, 900.00, DESCRIPTION_P5, Product.Category.DOMESTIC_APPLIANCE);
             Dictionary<IProduct, int> p8 = new Dictionary<IProduct, int>();
             p8.Add(product8,1);
-            this.products.Add(p8);
+            this.products.Add(product8,1);
             this.shop.Stock.AddProducts(p8);
             Assert.AreEqual(this.products, this.shop.Stock.GetTotalStock());
             this.shop = null;
@@ -182,7 +182,7 @@ namespace StradaTest
             productsSortedIncreasing.Add(this.product5);
             productsSortedIncreasing.Add(this.product7);
             productsSortedIncreasing.Add(this.product6);
-            Assert.AreEqual(productsSortedIncreasing, this.shop.Stock.GetProductsSorted((p1, p2) => this.shop.Stock.GetQuantityOfProduct(p1) - this.shop.Stock.GetQuantityOfProduct(p2)));
+            Assert.AreEqual(productsSortedIncreasing, this.shop.Stock.GetProductsSorted(Comparer<IProduct>.Create((p1, p2) => this.shop.Stock.GetQuantityOfProduct(p1) - this.shop.Stock.GetQuantityOfProduct(p2))));
             this.shop = null;
         }
 
