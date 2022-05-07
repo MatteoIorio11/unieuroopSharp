@@ -9,7 +9,7 @@ namespace unieuroopSharp.Strada
 {
     public class Stock : IStock
     {
-        private readonly Dictionary<IProduct, int> _productsStocked;
+        private readonly Dictionary<IProduct, int> _productsStocked = new Dictionary<IProduct, int>();
 
         public void AddProducts(Dictionary<IProduct, int> products)
         {

@@ -26,7 +26,7 @@ namespace StradaTest
         private static readonly String DESCRIPTION_P3 = "Best MacBook Ever Created";
         private static readonly String DESCRIPTION_P4 = "Best Ipad Ever";
         private static readonly String DESCRIPTION_P5 = "Best Samsung Phone Ever";
-        private readonly IShop shop = new Shop("Shop Test");
+        private readonly IShop shop;
         Dictionary<IProduct, int> products = new Dictionary<IProduct, int>();
 
         private readonly IProduct product1 = new Product(1, IPHONE_13_PRO, APPLE_PRODUCT,  1200.00,  900.00, DESCRIPTION_P1, Product.Category.SMARTPHONE);
@@ -44,6 +44,7 @@ namespace StradaTest
         [SetUp]
         public void Setup()
         {
+            shop = new Shop("Shop Test");
             products.Add(product1, 1);
             products.Add(product2, 2);
             products.Add(product3, 1);
@@ -51,13 +52,19 @@ namespace StradaTest
             products.Add(product5, 3);
             products.Add(product6, 30);
             products.Add(product7, 5);
+            this.shop.Stock.AddProducts(products);
         }
 
         [Test]
         public void TestAddProducts()
         {
-            this.shop.Stock.AddProducts(products);
+            IProduct product8 = new Product(8, SAMSUNG_S7, SAMSUNG_PRODUCT, 1200.00,  900.00, DESCRIPTION_P5, Product.Category.DOMESTIC_APPLIANCE);
+            Dictionary<IProduct, int> p8 = new Dictionary<IProduct, int>();
+            p8.Add(product8,1);
+            this.products.Add(p8);
+            this.shop.Stock.AddProducts(p8);
             Assert.AreEqual(this.products, this.shop.Stock.GetTotalStock());
+            this.shop = null;
         }
 
         [Test]
@@ -68,6 +75,7 @@ namespace StradaTest
             Assert.AreEqual(2, this.shop.Stock.GetQuantityOfProduct(product2));
             Assert.AreEqual(1, this.shop.Stock.GetQuantityOfProduct(product3));
             Assert.AreEqual(1, this.shop.Stock.GetQuantityOfProduct(product4));
+            this.shop = null;
         }
 
         [Test]
@@ -86,10 +94,10 @@ namespace StradaTest
             {
                 Assert.Fail("No exception have to be thrown");
             }
+            this.shop = null;
         }
-    }
 
-    [Test]
+        [Test]
         public void TestTakeFromStock2()
         {
             this.shop.Stock.AddProducts(products);
@@ -104,6 +112,7 @@ namespace StradaTest
             {
                 Assert.Fail("Some Products can not be Taken \n" + e.Message);
             }
+            this.shop = null;
         }
 
         [Test]
@@ -119,6 +128,7 @@ namespace StradaTest
             {
                 Assert.Fail("Product product1 exist inside the stock.");
             }
+            this.shop = null;
         }
 
         [Test]
@@ -136,16 +146,29 @@ namespace StradaTest
             {
                 Assert.Fail("Some Products can not be Deleted \n" + e.Message);
             }
+            this.shop = null;
         }
 
         [Test]
         public void TestFilterProducts()
         {
-            List<IProduct> productsFiltered = new List<IProduct>();
-            productsFiltered.Add(this.product7);
-            KeyValuePair<int, Product.Category> quantityAndCayegory = new KeyValuePair<int, Product.Category>(5, Product.Category.HOME);
-            Predicate<KeyValuePair<int, Product.Category>> filter = new Predicate<KeyValuePair<int, Product.Category>>(quantityAndCayegory);
-            Assert.AreEqual(productsFiltered, this.shop.Stock.GetFilterProducts(filter));
+            IProduct p1 = new Product(1, IPHONE_13_PRO, APPLE_PRODUCT, 1200.00, 900.00, "best phone ever created", Product.Category.SMARTPHONE);
+            IProduct p2 = new Product(2, APPLEWATCH, APPLE_PRODUCT, 500.00, 200.00, DESCRIPTION_P2, Product.Category.SMARTWATCH);
+            IProduct p3 = new Product(3, MAC_BOOK_14, APPLE_PRODUCT, 3000.00, 2000.00, DESCRIPTION_P3, Product.Category.PC);
+            var dictionary = new Dictionary<IProduct, int>();
+            dictionary.Add(p1, 1);
+            dictionary.Add(p2, 2);
+            dictionary.Add(p3, 1);
+            this.shop.Stock.AddProducts(dictionary);
+            Assert.True(this.shop.Stock.GetFilterProducts((tuple) => tuple.Item2 == Product.Category.SMARTPHONE).All((element) => element.ProductCode == p1.ProductCode));
+            Assert.True(this.shop.Stock.GetFilterProducts((tuple) => tuple.Item2 == Product.Category.SMARTWATCH).All((element) => element.ProductCode == p2.ProductCode));
+            Assert.True(this.shop.Stock.GetFilterProducts((tuple) => tuple.Item2 == Product.Category.PC).All((element) => element.ProductCode == p3.ProductCode));
+            var list = new List<IProduct>();
+            list.Add(p1);
+            list.Add(p2);
+            Assert.True(this.shop.Stock.GetFilterProducts((tuple) => tuple.Item1 == 1).All((element) => list.Any((product) => product.ProductCode == element.ProductCode)));
+            Assert.True(this.shop.Stock.GetFilterProducts((tuple) => tuple.Item1 == 1 && tuple.Item2 == Product.Category.DOMESTIC_APPLIANCE).Count == 0);
+            this.shop = null;
         }
 
         [Test]
@@ -160,11 +183,14 @@ namespace StradaTest
             productsSortedIncreasing.Add(this.product7);
             productsSortedIncreasing.Add(this.product6);
             Assert.AreEqual(productsSortedIncreasing, this.shop.Stock.GetProductsSorted((p1, p2) => this.shop.Stock.GetQuantityOfProduct(p1) - this.shop.Stock.GetQuantityOfProduct(p2)));
+            this.shop = null;
         }
 
         [Test]
         public void TestGetMax()
         {
             Assert.AreEqual(30, this.shop.Stock.GetMaxAmountOfProducts());
+            this.shop = null;
         }
+    }   
 }
