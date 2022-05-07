@@ -151,7 +151,15 @@ namespace StradaTest
         [Test]
         public void TestSortProducts()
         {
-
+            List<IProduct> productsSortedIncreasing = new List<IProduct>();
+            productsSortedIncreasing.Add(this.product1);
+            productsSortedIncreasing.Add(this.product3);
+            productsSortedIncreasing.Add(this.product2);
+            productsSortedIncreasing.Add(this.product4);
+            productsSortedIncreasing.Add(this.product5);
+            productsSortedIncreasing.Add(this.product7);
+            productsSortedIncreasing.Add(this.product6);
+            Assert.AreEqual(productsSortedIncreasing, this.shop.Stock.GetProductsSorted((p1, p2) => this.shop.Stock.GetQuantityOfProduct(p1) - this.shop.Stock.GetQuantityOfProduct(p2)));
         }
 
         [Test]
