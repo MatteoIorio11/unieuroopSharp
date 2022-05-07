@@ -92,7 +92,7 @@ namespace StradaTest
             }
             catch (ArgumentException e)
             {
-                Assert.Fail("No exception have to be thrown");
+                Assert.Fail("No exception have to be thrown" + e.Message);
             }
             this.shop = null;
         }
@@ -126,7 +126,7 @@ namespace StradaTest
             }
             catch (ArgumentException e)
             {
-                Assert.Fail("Product product1 exist inside the stock.");
+                Assert.Fail("Product product1 exist inside the stock." + e.Message);
             }
             this.shop = null;
         }
@@ -136,7 +136,7 @@ namespace StradaTest
         {
             HashSet<IProduct> productsDeleted = new HashSet<IProduct>();
             IProduct product8 = new Product(8, SAMSUNG_S7, SAMSUNG_PRODUCT, 1200.00,  900.00, DESCRIPTION_P5, Product.Category.HOME);
-            productsDeleted.Add(this.product8);
+            productsDeleted.Add(product8);
             try
             {
                 this.shop.Stock.DeleteProducts(productsDeleted);
