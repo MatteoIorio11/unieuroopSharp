@@ -112,7 +112,7 @@ namespace FerriTest
 			Assert.True(products.ContainsKey(p3));
 			Assert.False(products.ContainsKey(p2));
 			Assert.False(products.ContainsKey(p4));
-			Assert.Equals(Tests.QUANTITY_P1, quantityP1);
+			Assert.AreEqual(Tests.QUANTITY_P1, quantityP1);
 		}
 
 		[Test]
@@ -129,7 +129,7 @@ namespace FerriTest
 		}
 
 		[Test]
-		public void testTakeProductFromDepartment2()
+		public void TestTakeProductFromDepartment2()
 		{
 			try
 			{
@@ -143,15 +143,15 @@ namespace FerriTest
 		}
 		
 		[Test]
-		public void testAddProducts()
+		public void TestAddProducts()
 		{
 			Dictionary<IProduct, int> products = new Dictionary<IProduct, int>() { [p1] = 1, [p2] = 100, [p3] = 10 };
 			this._department.AddProducts(products);
 			int quantityP1 = this._department.GetAllProducts()[p1];
 			int quantityP2 = this._department.GetAllProducts()[p2];
 
-			Assert.Equals(Tests.FINAL_QUANTITY, quantityP1);
-			Assert.Equals(Tests.FINAL_QUANTITY_P2, quantityP2);
+			Assert.AreEqual(Tests.FINAL_QUANTITY, quantityP1);
+			Assert.AreEqual(Tests.FINAL_QUANTITY_P2, quantityP2);
 		}
 	}
 }
