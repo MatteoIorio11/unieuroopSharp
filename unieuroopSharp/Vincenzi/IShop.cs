@@ -146,16 +146,16 @@ namespace unieuroopSharp.Vincenzi
         /// <param name="requestedProducts"></param>
         void PutProductsBackInStock(IDepartment department, Dictionary<IProduct, int> requestedProducts);
         /// <summary>
-        /// Return the new merged department, created by the previously selected departments.
+        /// 
         /// </summary>
         /// <param name="departments"></param>
         /// <param name="newName"></param>
-        /// <returns></returns>
+        /// <returns>the new merged department, created by the previously selected departments.</returns>
         IDepartment MergeDepartments(HashSet<IDepartment> departments, string newName);
         /// <summary>
-        ///  Returns all the categories present in the Shop.
+        ///  
         /// </summary>
-        /// <returns></returns>
+        /// <returns>all the categories present in the Shop.</returns>
         HashSet<Category> GetAllCategories();
     }
 }
