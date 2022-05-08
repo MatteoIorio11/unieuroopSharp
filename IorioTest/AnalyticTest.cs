@@ -38,7 +38,7 @@ namespace IorioTest
         private readonly IProduct p6 = new Product(6, "ipad Pro", APPLE_PRODUCT, 1000.00, 500.00, "best ipad Pro ever created", Product.Category.HOME);
         private readonly IProduct p7 = new Product(7, "ipad Pro Max", APPLE_PRODUCT, 1200.00,  900.00, "best ipad pro max ever created", Product.Category.HOME);
         private readonly IProduct p8 = new Product(8, "ipad Pro Max v2", APPLE_PRODUCT, 1200.00, 900.00, "best ipad pro max ever created", Product.Category.HOME);
-        /**
+        /*
          * ALL THE SALES THAT WILL BE USED IN THIS TEST.
          */
         [SetUp]
@@ -103,6 +103,10 @@ namespace IorioTest
             Assert.AreEqual(TOTAL_PRODUCT_SOLD, this._analytic.GetTotalProductsSold().Count);
             this._shop = null;
         }
+         /*
+          *  TEST FOR : analytic.getQuantityOf(Product p) {@link Analytic}
+          * Test on quantity of total bought products, checking if the sum of all products bought are correct.
+          */
         [Test]
         public void TestQuantitySoldOf()
         {
@@ -117,6 +121,10 @@ namespace IorioTest
             Assert.AreNotEqual(0, this._analytic.GetQuantitySoldOf(p5));
             this._shop = null;
         }
+        /*
+         * TEST FOR : analytic.getQuantityOf(Product p, Predicate<LocalDate> date); {@link Analytic}
+         * Test quantity of a specific product in a specific date.
+         */
         [Test]
         public void TestQuantitySoldOf2()
         {
@@ -140,6 +148,11 @@ namespace IorioTest
             Assert.AreEqual(P3_TOTAL_SOLD, quantityP3);
             this._shop = null;
         }
+        /*
+         * TEST FOR : analytic.getOrderedByCategory(Predicate<Category> c); {@link Analytic}
+         * Test of getOrderedByCategory, this method return a Map contain a Product and it's quantity sold.
+         * In this test I have to check if every product's category in Sale are present in the analytic's result.
+         */
         [Test]
         public void TestOrderedByCategory1()
         {
@@ -167,7 +180,7 @@ namespace IorioTest
             this._shop = null;
 
         }
-        /**
+        /*
          * TEST FOR : analytic.GetOrderedByCategory(Predicate<Category> c); {@link Analytic}
          * Test of GetOrderedByCategory, this method return a Map contain a Product and it's quantity sold.
          * Test if every categories on sale are present in Analytic's result. By adding or removing some categories
@@ -234,7 +247,7 @@ namespace IorioTest
             Assert.AreEqual(new HashSet<IProduct>(), products.Keys);
             this._shop = null;
         }
-        /**
+        /*
          * TEST FOR : analytic.GetOrderedByDate(Predicate<DateTime> c); {@link Analytic}
          *  Testing the method GetProductByDate where we specified a Date or a time lapse,
          *  and we Get a Set of all different products sold in the Date or in the time lapse.
@@ -290,7 +303,7 @@ namespace IorioTest
             this._shop = null;
 
         }
-        /**
+        /*
          * TEST FOR : analytic.GetSoldOnDay(Predicate<DateTime> d);{@link Analytic}
          * This method use a Date or a time lapse for return a Map where we find in the key
          * the DateTime and in the Value we find all the different products sold in that day.
@@ -319,7 +332,7 @@ namespace IorioTest
             this._shop = null;
         }
 
-        /**
+        /*
          * TEST FOR : analytic.GetCategoriesSold(); {@link Analytic}
          * This test is for the method GetCategoriesSold, where the method return a Map
          * with Key the category and the Value is all the set of values. 
@@ -342,7 +355,7 @@ namespace IorioTest
             Assert.AreEqual(testMap[Product.Category.SMARTWATCH], categoriesSold[Product.Category.SMARTWATCH]);
             this._shop = null;
         }
-        /**
+        /*
          * TEST FOR : analytic.GetTotalStockPrice(); {@link Analytic}
          * test the stock price of all products.
          */
@@ -364,7 +377,7 @@ namespace IorioTest
                 Assert.AreEqual(totalCheck, total, ERROR_TOLLERANCE);
             this._shop = null;
         }
-        /**
+        /*
          * TEST FOR : analytic.GetTotalShopEarned(); {@link Analytic}
          * test where analytic return all the money resulting from sales.
          */
@@ -376,7 +389,7 @@ namespace IorioTest
             Assert.AreEqual(TOTAL_SHOP_EARNED, totalEarned, ERROR_TOLLERANCE);
             this._shop = null;
         }
-        /**
+        /*
          * TEST FOR : analytic.GetTotalSpentByYear(); {@link Analytic}
          * test where analytic return a map where we find the year and the total spent in that year.
          */
@@ -391,7 +404,7 @@ namespace IorioTest
             Assert.AreEqual(TOTAL_SPENT_NOW, value, ERROR_TOLLERANCE);
             this._shop = null;
         }
-        /**
+        /*
          * TEST FOR : analytic.GetTotalEarnedByYear(); {@link Analytic}
          * test where analytic return a Map where we can find in the Key the year and in the value the total earned in that year.
          */
@@ -406,7 +419,7 @@ namespace IorioTest
             Assert.AreEqual(TOTAL_SHOP_EARNED, value, ERROR_TOLLERANCE);
             this._shop = null;
         }
-        /**
+        /*
          *  TEST FOR : analytic.GetTotalEarnedByMonth(Predicate<Integer> year); {@link Analytic}
          *  test where analytic return a Map where we can find in the key the month and in the value the total earned in that month. 
          */
@@ -421,7 +434,7 @@ namespace IorioTest
             Assert.AreEqual(TOTAL_SHOP_EARNED, spentInThisMonth, ERROR_TOLLERANCE);
             this._shop = null;
         }
-        /**
+        /*
          * TEST FOR : analytic.GetTotalSpentByMonth(Predicate<Integer> year); {@link Analytic}
          * test where analytic return a Map where in the Key there is the month and in the value the total spent in that month.
          */
